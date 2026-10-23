@@ -49,7 +49,7 @@
 - 🔭 𝙸’𝚖 𝚌𝚞𝚛𝚛𝚎𝚗𝚝𝚕𝚢 𝚠𝚘𝚛𝚔𝚒𝚗𝚐 𝚘𝚗 **portfolio_projects.**
 - 🌱 𝙸’𝚖 𝚌𝚞𝚛𝚛𝚎𝚗𝚝𝚕𝚢 𝚕𝚎𝚊𝚛𝚗𝚒𝚗𝚐 **.**
 - 👯 𝙸’𝚖 𝚕𝚘𝚘𝚔𝚒𝚗𝚐 𝚝𝚘 𝚌𝚘𝚕𝚕𝚊𝚋𝚘𝚛𝚊𝚝𝚎 𝚘𝚗 **MERN, WEB-DEV.**
-- 💬 𝙰𝚜𝚔 𝙼𝚎 𝙰𝚋𝚘𝚞𝚝 𝙰𝚗𝚢𝚝𝚑𝚒𝚗𝚐 [here](https://github.com/maxgithub0515/maxgithub0515/issues/1) ! 𝙸 𝚊𝚖 𝚑𝚊𝚙𝚙𝚢 𝚝𝚘 𝚑𝚎𝚕𝚙.
+- 💬 𝙰𝚜𝚔 𝙼𝚎 𝙰𝚋𝚘𝚞𝚝 𝙰𝚗𝚢𝚝𝚑𝚒𝚗𝚐 [here](https://github.com/makspavlovskyi/makspavlovskyi/issues/1) ! 𝙸 𝚊𝚖 𝚑𝚊𝚙𝚙𝚢 𝚝𝚘 𝚑𝚎𝚕𝚙.
 - ⚡ 𝙵𝚞𝚗 𝚏𝚊𝚌𝚝 : **𝚃𝚑𝚎 𝚓𝚘𝚞𝚛𝚗𝚎𝚢 𝚒𝚜𝚗'𝚝 𝚊𝚋𝚘𝚞𝚝 𝚝𝚑𝚎 𝚎𝚗𝚍, 𝚋𝚞𝚝 𝚝𝚑𝚎 𝚖𝚘𝚖𝚎𝚗𝚝𝚜 𝚝𝚑𝚊𝚝 𝚖𝚊𝚔𝚎 𝚒𝚝.**
 
 <br/>
@@ -57,10 +57,10 @@
 
 
 <p align="center">
-  <img alt = "profile views" src="https://komarev.com/ghpvc/?username=maxgithub0515&style=flat&color=blue"/> •   
-  <img alt="𝙶𝚒𝚝𝙷𝚞𝚋 𝚏𝚘𝚕𝚕𝚘𝚠𝚎𝚛𝚜" src="https://img.shields.io/github/followers/maxgithub0515?label=Followers&style=social"/> •
-  <img src="https://img.shields.io/github/stars/maxgithub0515?label=Stars" alt="𝚃𝚘𝚝𝚊𝚕 𝚂𝚝𝚊𝚛𝚜"/> •
-  <a href="https://github.com/sponsors/maxgithub0515"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86"/></a>
+  <img alt = "profile views" src="https://komarev.com/ghpvc/?username=makspavlovskyi&style=flat&color=blue"/> •   
+  <img alt="𝙶𝚒𝚝𝙷𝚞𝚋 𝚏𝚘𝚕𝚕𝚘𝚠𝚎𝚛𝚜" src="https://img.shields.io/github/followers/makspavlovskyi?label=Followers&style=social"/> •
+  <img src="https://img.shields.io/github/stars/makspavlovskyi?label=Stars" alt="𝚃𝚘𝚝𝚊𝚕 𝚂𝚝𝚊𝚛𝚜"/> •
+  <a href="https://github.com/sponsors/makspavlovskyi"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86"/></a>
 </p>
 <!-- <p align="center">
   <code>
@@ -124,8 +124,8 @@
 <br/>
 
 <p align="center">
-    <img align="center" src="https://github-readme-stats.vercel.app/api?username=maxgithub0515&show_icons=true&hide_border=true&title_color=94b4a4&amp&icon_color=FFFFFF&amp&text_color=FFFFFF&amp&bg_color=000000&count_private=true&include_all_commits=true"/>
-    <img align="center" height="195px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=maxgithub0515&text_color=FFFFFF&bg_color=000000&title_color=94b4a4&langs_count=15&layout=compact&hide_border=true" />
+    <img align="center" src="https://github-readme-stats.vercel.app/api?username=makspavlovskyi&show_icons=true&hide_border=true&title_color=94b4a4&amp&icon_color=FFFFFF&amp&text_color=FFFFFF&amp&bg_color=000000&count_private=true&include_all_commits=true"/>
+    <img align="center" height="195px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=makspavlovskyi&text_color=FFFFFF&bg_color=000000&title_color=94b4a4&langs_count=15&layout=compact&hide_border=true" />
 </p>
 </details> -->
 <br/>
@@ -170,7 +170,7 @@
   <strong>𝚆𝚊𝚔𝚊𝚃𝚒𝚖𝚎 𝚂𝚝𝚊𝚝𝚜 : </strong>
 </summary> -->
 <!-- 
-<img align="right" height="330px" width="450px" src="https://wakatime.com/share/@maxgithub0515/d757c83d-c3a9-424e-86f1-ce88190c9840.svg" /> -->
+<img align="right" height="330px" width="450px" src="https://wakatime.com/share/@makspavlovskyi/d757c83d-c3a9-424e-86f1-ce88190c9840.svg" /> -->
 
 <!-- <br> -->
 <!-- <br> -->
