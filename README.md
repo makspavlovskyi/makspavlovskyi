@@ -21,17 +21,27 @@ I build web products end to end with TypeScript, React and Node.
 <a href="https://github.com/makspavlovskyi/js-challenges"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/cards/js-challenges-dark.svg"><img src="assets/cards/js-challenges-light.svg" alt="js-challenges: Virtual DOM renderer written from scratch, with its own tests" width="32%"></picture></a>
 </p>
 
-### Stack
+### What I actually use
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts,js,react,redux,nodejs,express,graphql,tailwind,postgres,mysql,mongodb,redis,kafka,docker,nginx,aws,firebase,linux,git,postman,figma&perline=11&theme=dark"><img src="https://skillicons.dev/icons?i=ts,js,react,redux,nodejs,express,graphql,tailwind,postgres,mysql,mongodb,redis,kafka,docker,nginx,aws,firebase,linux,git,postman,figma&perline=11&theme=light" alt="TypeScript, JavaScript, React, Redux, Node.js, Express, GraphQL, Tailwind, PostgreSQL, MySQL, MongoDB, Redis, Kafka, Docker, Nginx, AWS, Firebase, Linux, Git, Postman, Figma"></picture>
+Measured daily from the code in my public repos: language share from GitHub's byte counts, and frameworks found in each repo's dependencies and config files.
 
-### Latest activity
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-dark.svg"><img src="assets/generated/languages-light.svg" alt="Languages by share of code across my public repos" width="100%"></picture>
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/tools-dark.svg"><img src="assets/generated/tools-light.svg" alt="Frameworks and tools found in my public repos, with repo counts" width="100%"></picture>
+
+### Activity
 
 <!--START:activity-->
-_Filled in by the daily update workflow._
+- [illustrates.dev-platform-v2](https://github.com/makspavlovskyi/illustrates.dev-platform-v2) · 2026-05-14
+- [repo-game-adventure](https://github.com/makspavlovskyi/repo-game-adventure) · 2026-04-13
+- [ML_ToxicitY](https://github.com/makspavlovskyi/ML_ToxicitY) · 2026-01-20
+- [git-helper](https://github.com/makspavlovskyi/git-helper) · 2025-10-25
+- [js-challenges](https://github.com/makspavlovskyi/js-challenges) · 2024-12-10
 <!--END:activity-->
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0D1117"><img src="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&background=FFFFFF" alt="GitHub streak for makspavlovskyi"></picture>
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/github-snake-dark.svg"><img src="https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/github-snake.svg" alt="Snake eating my GitHub contribution graph" width="100%"></picture>
 
 ### Support my work
 

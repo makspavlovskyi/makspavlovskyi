@@ -1,0 +1,57 @@
+name: Update profile
+
+on:
+  schedule:
+    - cron: "17 4 * * *" # daily, 04:17 UTC
+  push:
+    branches: [main]
+    paths-ignore: ["assets/generated/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-profile
+  cancel-in-progress: false
+
+jobs:
+  readme:
+    name: Activity and usage stats
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Measure repos and rewrite README
+        run: node scripts/update-profile.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: makspavlovskyi
+      - name: Commit if changed
+        run: |
+          git add -A README.md assets/generated
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: refresh activity and usage stats"
+          git push
+
+  snake:
+    name: Contribution snake
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: "chore: update contribution snake"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
