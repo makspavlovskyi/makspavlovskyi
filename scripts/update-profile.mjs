@@ -119,6 +119,20 @@ const LANG_COLOR = {
   Shell: "#89e051", Dockerfile: "#384d54", GDScript: "#355570", "Jupyter Notebook": "#DA5B0B", Vue: "#41b883",
   Svelte: "#ff3e00", Kotlin: "#A97BFF", Swift: "#F05138", Dart: "#00B4AB", Makefile: "#427819", PLpgSQL: "#336790",
 };
+
+// Gradient surface shared with the banner and project cards: soft colour blobs + gradient border.
+const GLOW = {
+  light: { base: "#ffffff", blobs: [["#c9f5d6", 1, 0, 0.85], ["#cfe6ff", 0, 1, 0.9], ["#eadcff", 0.6, 1.2, 0.7]], edge: [["#2da44e", 0.55], ["#0969da", 0.45], ["#8250df", 0.5]] },
+  dark: { base: "#0d1117", blobs: [["#12603a", 1, 0, 0.85], ["#0f3a80", 0, 1, 0.9], ["#4a2590", 0.6, 1.2, 0.7]], edge: [["#2ea043", 0.7], ["#388bfd", 0.6], ["#a371f7", 0.7]] },
+};
+function surface(w, h, mode, strength = 0.55, rx = 10) {
+  const g = GLOW[mode];
+  const defs = g.blobs.map(([c, cx, cy, r], i) => `<radialGradient id="g${i}" cx="${cx}" cy="${cy}" r="${r}"><stop offset="0" stop-color="${c}" stop-opacity="${strength}"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></radialGradient>`).join("")
+    + `<linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">${g.edge.map(([c, o], k) => `<stop offset="${k / 2}" stop-color="${c}" stop-opacity="${o}"/>`).join("")}</linearGradient>`;
+  return `<defs>${defs}</defs><rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="${g.base}"/>`
+    + g.blobs.map((_, i) => `<rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}" fill="url(#g${i})"/>`).join("")
+    + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="none" stroke="url(#edge)"/>`;
+}
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const W = 880;
 
@@ -145,7 +159,7 @@ function languagesSvg(langs, repoCount, mode) {
       + ` <tspan fill="${t.muted}" font-weight="400" style="font-variant-numeric:tabular-nums">${pct}%</tspan></text>`;
   });
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Languages by code size across ${repoCount} public repositories: ${top.map(([n, b]) => `${n} ${((b / total) * 100).toFixed(1)}%`).join(", ")}">`
-    + `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="10" fill="${t.bg}" stroke="${t.border}"/>`
+    + surface(W, H, mode)
     + `<text x="24" y="34" fill="${t.fg}" font-family="${SANS}" font-size="14" font-weight="600">Languages <tspan fill="${t.muted}" font-weight="400">· share of code across ${repoCount} public repos</tspan></text>`
     + `<clipPath id="r"><rect x="24" y="52" width="${bw}" height="10" rx="5"/></clipPath><g clip-path="url(#r)">${bar}</g>`
     + legend + `</svg>\n`;
@@ -163,7 +177,7 @@ function toolsSvg(tools, repoCount, mode) {
     const w = Math.round(12 + nameW + 8 + countW + 5);
     if (x + w > W - pad) { x = pad; y += h + gap; }
     chips += `<g transform="translate(${x} ${y})">`
-      + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${h / 2}" fill="${t.bg}" stroke="${t.border}"/>`
+      + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${h / 2}" fill="${t.bg}" fill-opacity="0.75" stroke="${t.border}"/>`
       + `<text x="12" y="19.5" fill="${t.fg}" font-family="${SANS}" font-size="13" font-weight="500">${esc(name)}</text>`
       + `<rect x="${w - countW - 5}" y="5" width="${countW}" height="20" rx="10" fill="${n > 1 ? t.bar : t.soft}"/>`
       + `<text x="${w - 5 - countW / 2}" y="19" text-anchor="middle" fill="${n > 1 ? t.bg : t.muted}" font-family="${SANS}" font-size="12" font-weight="600" style="font-variant-numeric:tabular-nums">${n}</text>`
@@ -173,7 +187,7 @@ function toolsSvg(tools, repoCount, mode) {
   if (!tools.length) chips = `<text x="${pad}" y="${top + 18}" fill="${t.muted}" font-family="${SANS}" font-size="13">No frameworks detected yet.</text>`;
   const H = y + h + 22;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Frameworks and tools found in ${repoCount} public repositories, with the number of repos using each: ${tools.map(([n, c]) => `${n} ${c}`).join(", ")}">`
-    + `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="10" fill="${t.bg}" stroke="${t.border}"/>`
+    + surface(W, H, mode)
     + `<text x="${pad}" y="34" fill="${t.fg}" font-family="${SANS}" font-size="14" font-weight="600">Frameworks &amp; tools <tspan fill="${t.muted}" font-weight="400">· number of repos using each, from dependencies and config files</tspan></text>`
     + chips + `</svg>\n`;
 }
@@ -202,7 +216,7 @@ function activitySvg(repos, mode) {
     const desc = r.description?.trim() ? fit(r.description.trim(), 13, textMax) : "";
     rows += `<text x="${lineX - 22}" y="${y + 13}" text-anchor="end" fill="${t.fg}" font-family="${SANS}" font-size="13" font-weight="500" style="font-variant-numeric:tabular-nums">${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}</text>`
       + `<text x="${lineX - 22}" y="${y + 31}" text-anchor="end" fill="${t.muted}" font-family="${SANS}" font-size="12" style="font-variant-numeric:tabular-nums">${d.getUTCFullYear()}</text>`
-      + `<circle cx="${lineX}" cy="${y + 8}" r="6" fill="${i === 0 ? t.bar : t.bg}" stroke="${i === 0 ? t.bar : t.border}" stroke-width="2"/>`
+      + `<circle cx="${lineX}" cy="${y + 8}" r="6" fill="${i === 0 ? t.bar : GLOW[mode].base}" stroke="${i === 0 ? t.bar : t.border}" stroke-width="2"/>`
       + `<text x="${lineX + 24}" y="${y + 13}" fill="${t.link}" font-family="${SANS}" font-size="14" font-weight="600">${esc(fit(r.name, 14, textMax))}</text>`
       + (desc ? `<text x="${lineX + 24}" y="${y + 32}" fill="${t.muted}" font-family="${SANS}" font-size="13">${esc(desc)}</text>` : "")
       + (lang ? `<circle cx="${W - 24 - langW + 5}" cy="${y + 9}" r="5" fill="${color}"/><text x="${W - 24}" y="${y + 13}" text-anchor="end" fill="${t.muted}" font-family="${SANS}" font-size="12">${esc(lang)}</text>` : "");
@@ -210,7 +224,7 @@ function activitySvg(repos, mode) {
   if (!recent.length) rows = `<text x="24" y="${top + 13}" fill="${t.muted}" font-family="${SANS}" font-size="13">No public activity yet.</text>`;
   const line = recent.length > 1 ? `<path d="M${lineX} ${top + 8} V${top + (recent.length - 1) * rowH + 8}" stroke="${t.border}" stroke-width="2"/>` : "";
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Recently pushed repositories: ${recent.map((r) => `${r.name} on ${r.pushed_at.slice(0, 10)}`).join(", ")}">`
-    + `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="10" fill="${t.bg}" stroke="${t.border}"/>`
+    + surface(W, H, mode)
     + `<text x="24" y="34" fill="${t.fg}" font-family="${SANS}" font-size="14" font-weight="600">Recently pushed <tspan fill="${t.muted}" font-weight="400">· my 5 latest public repos</tspan></text>`
     + line + rows + `</svg>\n`;
 }
