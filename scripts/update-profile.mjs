@@ -120,27 +120,26 @@ const LANG_COLOR = {
   Svelte: "#ff3e00", Kotlin: "#A97BFF", Swift: "#F05138", Dart: "#00B4AB", Makefile: "#427819", PLpgSQL: "#336790",
 };
 
-// Theme: Copper Teal × Stripes (palette 23, layout K), same values as the banner and project cards.
+// Theme: Copper Teal × Liquid marble (palette 23, layout X12), same values as the banner and project cards.
 const COPPER = "#c2410c", TEAL = "#0f766e";
 const BASE = { light: "#ffffff", dark: "#0d1117" };
 const hex = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
 const mix = (a, b, t) => "#" + hex(a).map((x, i) => Math.round(x + (hex(b)[i] - x) * t).toString(16).padStart(2, "0")).join("");
-const tones = (mode) => mode === "light"
-  ? [mix(COPPER, "#ffffff", 0.62), mix(TEAL, "#ffffff", 0.62), COPPER, TEAL]
-  : [mix(COPPER, BASE.dark, 0.35), mix(TEAL, BASE.dark, 0.35), mix(COPPER, "#ffffff", 0.1), mix(TEAL, "#ffffff", 0.1)];
+const tones = (mode) => (mode === "light" ? [COPPER, TEAL] : [mix(COPPER, "#ffffff", 0.12), mix(TEAL, "#ffffff", 0.12)]);
 const GLOW = { light: { base: BASE.light }, dark: { base: BASE.dark } };
 function surface(w, h, mode, strength = 0.55, rx = 10) {
-  const [a, b, ea, eb] = tones(mode), k = strength >= 1 ? 1 : 0.7;
-  const bands = [0.58, 0.68, 0.77, 0.85, 0.92].map((p, i) => {
-    const x = (w * p).toFixed(1);
-    return `<rect x="${x}" y="${-h}" width="${Math.round(w * 0.06)}" height="${h * 3}" transform="rotate(28 ${x} ${h / 2})" fill="url(#st)" fill-opacity="${((0.55 - i * 0.07) * k).toFixed(2)}"/>`;
-  }).join("");
-  return `<defs><linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`
-    + `<filter id="sb"><feGaussianBlur stdDeviation="${Math.round(h * 0.04)}"/></filter>`
+  const [ea, eb] = tones(mode), base = BASE[mode], big = w > 500;
+  const [lo, mid, hi] = big ? [0.12, 0.55, 1] : [0.05, 0.18, 0.42]; // wide cards: keep text readable
+  const [fx, fy] = big ? [0.006, 0.012] : [0.012, 0.02];
+  return `<defs><linearGradient id="lq" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${ea}"/><stop offset=".5" stop-color="${base}"/><stop offset="1" stop-color="${eb}"/></linearGradient>`
+    + `<filter id="lf" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${fx} ${fy}" numOctaves="3" seed="4"/>`
+    + `<feDisplacementMap in="SourceGraphic" scale="${Math.round(h * 0.9)}" xChannelSelector="R" yChannelSelector="G"/></filter>`
+    + `<linearGradient id="fd" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="${lo}"/><stop offset=".45" stop-color="#fff" stop-opacity="${mid}"/><stop offset=".7" stop-color="#fff" stop-opacity="${hi}"/></linearGradient>`
+    + `<mask id="fm"><rect width="${w}" height="${h}" fill="url(#fd)"/></mask>`
     + `<clipPath id="clip"><rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}"/></clipPath>`
     + `<linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${ea}" stop-opacity=".55"/><stop offset="1" stop-color="${eb}" stop-opacity=".55"/></linearGradient></defs>`
-    + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="${BASE[mode]}"/>`
-    + `<g clip-path="url(#clip)"><g filter="url(#sb)">${bands}</g></g>`
+    + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="${base}"/>`
+    + `<g clip-path="url(#clip)"><g mask="url(#fm)"><rect x="${Math.round(-w * 0.2)}" y="${Math.round(-h * 0.7)}" width="${Math.round(w * 1.4)}" height="${Math.round(h * 2.4)}" fill="url(#lq)" fill-opacity=".75" filter="url(#lf)"/></g></g>`
     + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="none" stroke="url(#edge)"/>`;
 }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
