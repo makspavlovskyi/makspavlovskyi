@@ -37,7 +37,7 @@ Measured daily from the code in my public repos: language share from GitHub's by
 
 <a href="https://github.com/makspavlovskyi?tab=repositories&sort=updated"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark.svg"><img src="assets/generated/activity-light.svg" alt="My most recently pushed public repositories" width="100%"></picture></a>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0D1117"><img src="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&background=FFFFFF" alt="GitHub streak for makspavlovskyi"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0D1117&ring=E0703F&fire=E0703F&currStreakLabel=E0703F"><img src="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&background=FFFFFF&ring=C2410C&fire=C2410C&currStreakLabel=C2410C" alt="GitHub streak for makspavlovskyi"></picture>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/github-snake-dark.svg"><img src="https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/github-snake.svg" alt="Snake eating my GitHub contribution graph" width="100%"></picture>
 

@@ -110,8 +110,8 @@ function detect(repo) {
 // ---------- drawing ----------
 const SANS = '-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,&quot;Noto Sans&quot;,Helvetica,Arial,sans-serif';
 const THEME = {
-  light: { bg: "#ffffff", soft: "#eff2f5", border: "#d0d7de", fg: "#1f2328", muted: "#59636e", bar: "#2da44e", link: "#0969da" },
-  dark: { bg: "#0d1117", soft: "#21262d", border: "#30363d", fg: "#e6edf3", muted: "#9198a1", bar: "#3fb950", link: "#4493f8" },
+  light: { bg: "#ffffff", soft: "#eff2f5", border: "#d0d7de", fg: "#1f2328", muted: "#59636e", bar: "#c2410c", link: "#0969da" },
+  dark: { bg: "#0d1117", soft: "#21262d", border: "#30363d", fg: "#e6edf3", muted: "#9198a1", bar: "#e0703f", link: "#4493f8" },
 };
 const LANG_COLOR = {
   TypeScript: "#3178c6", JavaScript: "#f1e05a", Python: "#3572A5", HTML: "#e34c26", CSS: "#563d7c", SCSS: "#c6538c",
@@ -120,17 +120,27 @@ const LANG_COLOR = {
   Svelte: "#ff3e00", Kotlin: "#A97BFF", Swift: "#F05138", Dart: "#00B4AB", Makefile: "#427819", PLpgSQL: "#336790",
 };
 
-// Gradient surface shared with the banner and project cards: soft colour blobs + gradient border.
-const GLOW = {
-  light: { base: "#ffffff", blobs: [["#c9f5d6", 1, 0, 0.85], ["#cfe6ff", 0, 1, 0.9], ["#eadcff", 0.6, 1.2, 0.7]], edge: [["#2da44e", 0.55], ["#0969da", 0.45], ["#8250df", 0.5]] },
-  dark: { base: "#0d1117", blobs: [["#12603a", 1, 0, 0.85], ["#0f3a80", 0, 1, 0.9], ["#4a2590", 0.6, 1.2, 0.7]], edge: [["#2ea043", 0.7], ["#388bfd", 0.6], ["#a371f7", 0.7]] },
-};
+// Theme: Copper Teal × Stripes (palette 23, layout K), same values as the banner and project cards.
+const COPPER = "#c2410c", TEAL = "#0f766e";
+const BASE = { light: "#ffffff", dark: "#0d1117" };
+const hex = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+const mix = (a, b, t) => "#" + hex(a).map((x, i) => Math.round(x + (hex(b)[i] - x) * t).toString(16).padStart(2, "0")).join("");
+const tones = (mode) => mode === "light"
+  ? [mix(COPPER, "#ffffff", 0.62), mix(TEAL, "#ffffff", 0.62), COPPER, TEAL]
+  : [mix(COPPER, BASE.dark, 0.35), mix(TEAL, BASE.dark, 0.35), mix(COPPER, "#ffffff", 0.1), mix(TEAL, "#ffffff", 0.1)];
+const GLOW = { light: { base: BASE.light }, dark: { base: BASE.dark } };
 function surface(w, h, mode, strength = 0.55, rx = 10) {
-  const g = GLOW[mode];
-  const defs = g.blobs.map(([c, cx, cy, r], i) => `<radialGradient id="g${i}" cx="${cx}" cy="${cy}" r="${r}"><stop offset="0" stop-color="${c}" stop-opacity="${strength}"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></radialGradient>`).join("")
-    + `<linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">${g.edge.map(([c, o], k) => `<stop offset="${k / 2}" stop-color="${c}" stop-opacity="${o}"/>`).join("")}</linearGradient>`;
-  return `<defs>${defs}</defs><rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="${g.base}"/>`
-    + g.blobs.map((_, i) => `<rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}" fill="url(#g${i})"/>`).join("")
+  const [a, b, ea, eb] = tones(mode), k = strength >= 1 ? 1 : 0.7;
+  const bands = [0.58, 0.68, 0.77, 0.85, 0.92].map((p, i) => {
+    const x = (w * p).toFixed(1);
+    return `<rect x="${x}" y="${-h}" width="${Math.round(w * 0.06)}" height="${h * 3}" transform="rotate(28 ${x} ${h / 2})" fill="url(#st)" fill-opacity="${((0.55 - i * 0.07) * k).toFixed(2)}"/>`;
+  }).join("");
+  return `<defs><linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`
+    + `<filter id="sb"><feGaussianBlur stdDeviation="${Math.round(h * 0.04)}"/></filter>`
+    + `<clipPath id="clip"><rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}"/></clipPath>`
+    + `<linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${ea}" stop-opacity=".55"/><stop offset="1" stop-color="${eb}" stop-opacity=".55"/></linearGradient></defs>`
+    + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="${BASE[mode]}"/>`
+    + `<g clip-path="url(#clip)"><g filter="url(#sb)">${bands}</g></g>`
     + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="none" stroke="url(#edge)"/>`;
 }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
