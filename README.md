@@ -1,12 +1,12 @@
-<p align="right">
-<a href="https://www.patreon.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/patreon-dark.svg"><img src="assets/buttons/patreon-light.svg" alt="Patreon"></picture></a>
-<a href="https://buymeacoffee.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/bmc-dark.svg"><img src="assets/buttons/bmc-light.svg" alt="Buy me a coffee"></picture></a>
-</p>
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
   <img alt="$ whoami: Maks Pavlovskyi, full-stack, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
 </picture>
+
+<p align="right">
+<a href="https://www.patreon.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/patreon-dark.svg"><img src="assets/buttons/patreon-light.svg" alt="Patreon"></picture></a>
+<a href="https://buymeacoffee.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/bmc-dark.svg"><img src="assets/buttons/bmc-light.svg" alt="Buy me a coffee"></picture></a>
+</p>
 
 I build web products end to end with TypeScript, React and Node.
 
