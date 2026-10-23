@@ -1,3 +1,8 @@
+<p align="right">
+<a href="https://www.patreon.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/patreon-dark.svg"><img src="assets/buttons/patreon-light.svg" alt="Patreon"></picture></a>
+<a href="https://buymeacoffee.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/bmc-dark.svg"><img src="assets/buttons/bmc-light.svg" alt="Buy me a coffee"></picture></a>
+</p>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
   <img alt="$ whoami: Maks Pavlovskyi, full-stack, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
@@ -43,11 +48,3 @@ Measured daily from the code in my public repos: language share from GitHub's by
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/github-snake-dark.svg"><img src="https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/github-snake.svg" alt="Snake eating my GitHub contribution graph" width="100%"></picture>
 
-### Support my work
-
-Support covers hosting and maintenance for my projects. Supporters get build logs, blueprints and progress updates.
-
-<p>
-<a href="https://www.patreon.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/patreon-dark.svg"><img src="assets/buttons/patreon-light.svg" alt="Patreon"></picture></a>
-<a href="https://buymeacoffee.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/bmc-dark.svg"><img src="assets/buttons/bmc-light.svg" alt="Buy me a coffee"></picture></a>
-</p>
