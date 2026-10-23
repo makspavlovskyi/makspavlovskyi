@@ -1,5 +1,5 @@
 // Daily profile refresh, run by .github/workflows/update-profile.yml.
-// 1. Rewrites the "latest activity" block in README.md.
+// 1. Draws the 5 most recently pushed repos as an activity card.
 // 2. Measures what the public repos actually use and draws it as SVGs:
 //    - languages: GitHub's own byte counts per repo, summed
 //    - frameworks & tools: detected from package.json, requirements.txt,
@@ -110,8 +110,8 @@ function detect(repo) {
 // ---------- drawing ----------
 const SANS = '-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,&quot;Noto Sans&quot;,Helvetica,Arial,sans-serif';
 const THEME = {
-  light: { bg: "#ffffff", soft: "#eff2f5", border: "#d0d7de", fg: "#1f2328", muted: "#59636e", bar: "#2da44e" },
-  dark: { bg: "#0d1117", soft: "#21262d", border: "#30363d", fg: "#e6edf3", muted: "#9198a1", bar: "#3fb950" },
+  light: { bg: "#ffffff", soft: "#eff2f5", border: "#d0d7de", fg: "#1f2328", muted: "#59636e", bar: "#2da44e", link: "#0969da" },
+  dark: { bg: "#0d1117", soft: "#21262d", border: "#30363d", fg: "#e6edf3", muted: "#9198a1", bar: "#3fb950", link: "#4493f8" },
 };
 const LANG_COLOR = {
   TypeScript: "#3178c6", JavaScript: "#f1e05a", Python: "#3572A5", HTML: "#e34c26", CSS: "#563d7c", SCSS: "#c6538c",
@@ -178,19 +178,41 @@ function toolsSvg(tools, repoCount, mode) {
     + chips + `</svg>\n`;
 }
 
-// ---------- activity block ----------
-const escMd = (s) => s.replace(/[|<>]/g, (c) => `&#${c.charCodeAt(0)};`);
-async function updateReadme(repos) {
-  const lines = [...repos]
-    .sort((a, b) => b.pushed_at.localeCompare(a.pushed_at))
-    .slice(0, 5)
-    .map((r) => `- [${r.name}](${r.html_url})${r.description ? ` · ${escMd(r.description.trim())}` : ""} · ${r.pushed_at.slice(0, 10)}`);
-  const file = new URL("README.md", ROOT);
-  const readme = await readFile(file, "utf8");
-  const re = /(<!--START:activity-->\n)[\s\S]*?(\n<!--END:activity-->)/;
-  if (!re.test(readme)) throw new Error("activity markers not found in README.md");
-  const next = readme.replace(re, `$1${lines.join("\n") || "_No public activity yet._"}$2`);
-  if (next !== readme) await writeFile(file, next);
+// ---------- activity card ----------
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function fit(s, size, maxW) {
+  if (textW(s, size) <= maxW) return s;
+  while (s.length > 1 && textW(s + "…", size) > maxW) s = s.slice(0, -1);
+  return s.trimEnd() + "…";
+}
+
+function activitySvg(repos, mode) {
+  const t = THEME[mode];
+  const recent = [...repos].sort((a, b) => b.pushed_at.localeCompare(a.pushed_at)).slice(0, 5);
+  const rowH = 58, top = 58, lineX = 128;
+  const H = top + (Math.max(1, recent.length) - 1) * rowH + 56;
+  let rows = "";
+  recent.forEach((r, i) => {
+    const y = top + i * rowH;
+    const d = new Date(r.pushed_at);
+    const lang = Object.entries(r.languages ?? {}).sort((a, b) => b[1] - a[1])[0]?.[0];
+    const color = LANG_COLOR[lang] ?? "#8b949e";
+    const langW = lang ? textW(lang, 12) + 22 : 0;
+    const textMax = W - 24 - langW - (lineX + 24) - 16;
+    const desc = r.description?.trim() ? fit(r.description.trim(), 13, textMax) : "";
+    rows += `<text x="${lineX - 22}" y="${y + 13}" text-anchor="end" fill="${t.fg}" font-family="${SANS}" font-size="13" font-weight="500" style="font-variant-numeric:tabular-nums">${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}</text>`
+      + `<text x="${lineX - 22}" y="${y + 31}" text-anchor="end" fill="${t.muted}" font-family="${SANS}" font-size="12" style="font-variant-numeric:tabular-nums">${d.getUTCFullYear()}</text>`
+      + `<circle cx="${lineX}" cy="${y + 8}" r="6" fill="${i === 0 ? t.bar : t.bg}" stroke="${i === 0 ? t.bar : t.border}" stroke-width="2"/>`
+      + `<text x="${lineX + 24}" y="${y + 13}" fill="${t.link}" font-family="${SANS}" font-size="14" font-weight="600">${esc(fit(r.name, 14, textMax))}</text>`
+      + (desc ? `<text x="${lineX + 24}" y="${y + 32}" fill="${t.muted}" font-family="${SANS}" font-size="13">${esc(desc)}</text>` : "")
+      + (lang ? `<circle cx="${W - 24 - langW + 5}" cy="${y + 9}" r="5" fill="${color}"/><text x="${W - 24}" y="${y + 13}" text-anchor="end" fill="${t.muted}" font-family="${SANS}" font-size="12">${esc(lang)}</text>` : "");
+  });
+  if (!recent.length) rows = `<text x="24" y="${top + 13}" fill="${t.muted}" font-family="${SANS}" font-size="13">No public activity yet.</text>`;
+  const line = recent.length > 1 ? `<path d="M${lineX} ${top + 8} V${top + (recent.length - 1) * rowH + 8}" stroke="${t.border}" stroke-width="2"/>` : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Recently pushed repositories: ${recent.map((r) => `${r.name} on ${r.pushed_at.slice(0, 10)}`).join(", ")}">`
+    + `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="10" fill="${t.bg}" stroke="${t.border}"/>`
+    + `<text x="24" y="34" fill="${t.fg}" font-family="${SANS}" font-size="14" font-weight="600">Recently pushed <tspan fill="${t.muted}" font-weight="400">· my 5 latest public repos</tspan></text>`
+    + line + rows + `</svg>\n`;
 }
 
 // ---------- main ----------
@@ -208,11 +230,11 @@ await mkdir(OUT, { recursive: true });
 for (const mode of ["light", "dark"]) {
   await writeFile(new URL(`languages-${mode}.svg`, OUT), languagesSvg(langs, repos.length, mode));
   await writeFile(new URL(`tools-${mode}.svg`, OUT), toolsSvg(tools, repos.length, mode));
+  await writeFile(new URL(`activity-${mode}.svg`, OUT), activitySvg(repos, mode));
 }
 await writeFile(new URL("stats.json", OUT), JSON.stringify({
   repos: repos.length,
   languages: Object.fromEntries(langs),
   tools: Object.fromEntries(Object.entries(toolRepos).map(([k, s]) => [k, [...s].sort()])),
 }, null, 2) + "\n");
-await updateReadme(repos);
 console.log(`${repos.length} repos · ${langs.length} languages · ${tools.length} tools`);

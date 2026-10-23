@@ -35,13 +35,7 @@ Measured daily from the code in my public repos: language share from GitHub's by
 
 ### Activity
 
-<!--START:activity-->
-- [illustrates.dev-platform-v2](https://github.com/makspavlovskyi/illustrates.dev-platform-v2) · 2026-05-14
-- [repo-game-adventure](https://github.com/makspavlovskyi/repo-game-adventure) · 2026-04-13
-- [ML_ToxicitY](https://github.com/makspavlovskyi/ML_ToxicitY) · 2026-01-20
-- [git-helper](https://github.com/makspavlovskyi/git-helper) · 2025-10-25
-- [js-challenges](https://github.com/makspavlovskyi/js-challenges) · 2024-12-10
-<!--END:activity-->
+<a href="https://github.com/makspavlovskyi?tab=repositories&sort=updated"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark.svg"><img src="assets/generated/activity-light.svg" alt="My most recently pushed public repositories" width="100%"></picture></a>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0D1117"><img src="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&background=FFFFFF" alt="GitHub streak for makspavlovskyi"></picture>
 
