@@ -120,26 +120,68 @@ const LANG_COLOR = {
   Svelte: "#ff3e00", Kotlin: "#A97BFF", Swift: "#F05138", Dart: "#00B4AB", Makefile: "#427819", PLpgSQL: "#336790",
 };
 
-// Theme: Copper Teal × Liquid marble (palette 23, layout X12), same values as the banner and project cards.
-const COPPER = "#c2410c", TEAL = "#0f766e";
+// Theme: colours + background layout come from profile.config.json (same layouts as the README generator).
+const CFG = JSON.parse(await readFile(new URL("profile.config.json", ROOT), "utf8"));
+const LAYOUT = process.env.PROFILE_LAYOUT ?? CFG.layout;
+const [COPPER, TEAL] = CFG.colors;
 const BASE = { light: "#ffffff", dark: "#0d1117" };
 const hex = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
 const mix = (a, b, t) => "#" + hex(a).map((x, i) => Math.round(x + (hex(b)[i] - x) * t).toString(16).padStart(2, "0")).join("");
 const tones = (mode) => (mode === "light" ? [COPPER, TEAL] : [mix(COPPER, "#ffffff", 0.12), mix(TEAL, "#ffffff", 0.12)]);
 const GLOW = { light: { base: BASE.light }, dark: { base: BASE.dark } };
+const f1 = (n) => n.toFixed(1);
+function lcg(seed) { // mirrors lcg() in the generator; BigInt keeps the maths exact
+  let s = BigInt(seed);
+  return () => { s = (s * 1103515245n + 12345n) % 2147483648n; return Number(s) / 2147483648; };
+}
+function pattern(layout, w, h, mode) {
+  const [ea, eb] = tones(mode), base = BASE[mode], hh = Math.min(h, 200);
+  if (layout === "starlines") {
+    const cx = w * 0.82, cy = h * 0.5, rnd = lcg(1241); let out = "";
+    for (let i = 0; i < 120; i++) {
+      const ang = rnd() * 2 * Math.PI, ln = hh * (0.1 + rnd() * 0.5), c = rnd() < 0.5 ? ea : eb;
+      out += `<line x1="${f1(cx)}" y1="${f1(cy)}" x2="${f1(cx + Math.cos(ang) * ln)}" y2="${f1(cy + Math.sin(ang) * ln)}" stroke="${c}" stroke-opacity=".5" stroke-width=".8"/>`;
+    }
+    return ["", out];
+  }
+  if (layout === "marble") {
+    const [fx, fy] = w > 500 ? [0.006, 0.012] : [0.012, 0.02];
+    return [`<linearGradient id="lq" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${ea}"/><stop offset=".5" stop-color="${base}"/><stop offset="1" stop-color="${eb}"/></linearGradient>`
+      + `<filter id="lf" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${fx} ${fy}" numOctaves="3" seed="4"/>`
+      + `<feDisplacementMap in="SourceGraphic" scale="${Math.round(hh * 0.9)}" xChannelSelector="R" yChannelSelector="G"/></filter>`,
+      `<rect x="${Math.round(-w * 0.2)}" y="${Math.round(-h * 0.7)}" width="${Math.round(w * 1.4)}" height="${Math.round(h * 2.4)}" fill="url(#lq)" fill-opacity=".75" filter="url(#lf)"/>`];
+  }
+  if (layout === "stripes") {
+    const a = mode === "light" ? mix(COPPER, "#ffffff", 0.62) : mix(COPPER, base, 0.35);
+    const b = mode === "light" ? mix(TEAL, "#ffffff", 0.62) : mix(TEAL, base, 0.35);
+    const bands = [0.58, 0.68, 0.77, 0.85, 0.92].map((p, i) => `<rect x="${f1(w * p)}" y="${-h}" width="${Math.round(w * 0.06)}" height="${h * 3}" transform="rotate(28 ${f1(w * p)} ${h / 2})" fill="url(#st)" fill-opacity="${((0.55 - i * 0.07) * 0.7).toFixed(2)}"/>`).join("");
+    return [`<linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient><filter id="sb"><feGaussianBlur stdDeviation="${Math.round(hh * 0.04)}"/></filter>`,
+      `<g filter="url(#sb)">${bands}</g>`];
+  }
+  if (layout === "topographic") {
+    const cx = w * 0.8, cy = h * 0.55; let out = "";
+    for (let i = 1; i < 14; i++) {
+      const rr = i * Math.max(w, hh) * 0.045, pts = [];
+      for (let k = 0; k < 48; k++) {
+        const tt = (k / 48) * 2 * Math.PI, j = 1 + 0.12 * Math.sin(3 * tt + i * 0.7) + 0.06 * Math.sin(5 * tt - i);
+        pts.push(`${f1(cx + Math.cos(tt) * rr * j * 1.5)},${f1(cy + Math.sin(tt) * rr * j)}`);
+      }
+      out += `<polygon points="${pts.join(" ")}" fill="none" stroke="${i % 2 ? ea : eb}" stroke-opacity="${(0.55 - i * 0.03).toFixed(2)}" stroke-width="1"/>`;
+    }
+    return ["", out];
+  }
+  throw new Error(`unknown layout ${layout}`);
+}
 function surface(w, h, mode, strength = 0.55, rx = 10) {
-  const [ea, eb] = tones(mode), base = BASE[mode], big = w > 500;
-  const [lo, mid, hi] = big ? [0.12, 0.55, 1] : [0.05, 0.18, 0.42]; // wide cards: keep text readable
-  const [fx, fy] = big ? [0.006, 0.012] : [0.012, 0.02];
-  return `<defs><linearGradient id="lq" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${ea}"/><stop offset=".5" stop-color="${base}"/><stop offset="1" stop-color="${eb}"/></linearGradient>`
-    + `<filter id="lf" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${fx} ${fy}" numOctaves="3" seed="4"/>`
-    + `<feDisplacementMap in="SourceGraphic" scale="${Math.round(h * 0.9)}" xChannelSelector="R" yChannelSelector="G"/></filter>`
-    + `<linearGradient id="fd" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="${lo}"/><stop offset=".45" stop-color="#fff" stop-opacity="${mid}"/><stop offset=".7" stop-color="#fff" stop-opacity="${hi}"/></linearGradient>`
+  const [ea, eb] = tones(mode), base = BASE[mode];
+  const [lo, mid, hi] = [0.05, 0.18, 0.42]; // generated cards carry text across the full width
+  const [pdefs, body] = pattern(LAYOUT, w, h, mode);
+  return `<defs>${pdefs}<linearGradient id="fd" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="${lo}"/><stop offset=".45" stop-color="#fff" stop-opacity="${mid}"/><stop offset=".7" stop-color="#fff" stop-opacity="${hi}"/></linearGradient>`
     + `<mask id="fm"><rect width="${w}" height="${h}" fill="url(#fd)"/></mask>`
     + `<clipPath id="clip"><rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}"/></clipPath>`
     + `<linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${ea}" stop-opacity=".55"/><stop offset="1" stop-color="${eb}" stop-opacity=".55"/></linearGradient></defs>`
     + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="${base}"/>`
-    + `<g clip-path="url(#clip)"><g mask="url(#fm)"><rect x="${Math.round(-w * 0.2)}" y="${Math.round(-h * 0.7)}" width="${Math.round(w * 1.4)}" height="${Math.round(h * 2.4)}" fill="url(#lq)" fill-opacity=".75" filter="url(#lf)"/></g></g>`
+    + `<g clip-path="url(#clip)"><g mask="url(#fm)">${body}</g></g>`
     + `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="none" stroke="url(#edge)"/>`;
 }
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);

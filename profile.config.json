@@ -1,0 +1,5 @@
+{
+  "layout": "starlines",
+  "colors": ["#c2410c", "#0f766e"],
+  "layouts": ["starlines", "marble", "stripes", "topographic"]
+}
