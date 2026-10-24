@@ -1,29 +1,22 @@
 {
-  "repos": 5,
+  "repos": 21,
   "languages": {
-    "TypeScript": 350689,
-    "JavaScript": 14462,
-    "CSS": 9652,
+    "JavaScript": 1459870,
+    "HTML": 678640,
+    "TypeScript": 586582,
+    "CSS": 186230,
+    "Java": 37690,
+    "Python": 7987,
+    "Dockerfile": 6605,
     "GDScript": 5574,
-    "Python": 3001,
-    "Dockerfile": 2725,
     "Makefile": 999,
-    "HTML": 389
+    "Shell": 640,
+    "GDShader": 422,
+    "Handlebars": 192,
+    "MAXScript": 160,
+    "Procfile": 112
   },
   "tools": {
-    "FastAPI": [
-      "ML_ToxicitY"
-    ],
-    "PyTorch": [
-      "ML_ToxicitY"
-    ],
-    "Hugging Face": [
-      "ML_ToxicitY"
-    ],
-    "Docker": [
-      "ML_ToxicitY",
-      "illustrates.dev-platform-v2"
-    ],
     "Commander": [
       "git-helper"
     ],
@@ -31,27 +24,42 @@
       "git-helper"
     ],
     "OpenAI API": [
+      "computer-science-project2.0",
       "git-helper"
     ],
     "BullMQ": [
       "illustrates.dev-platform-v2"
     ],
     "Express": [
-      "illustrates.dev-platform-v2"
+      "11-projects-portfolio",
+      "JS-Type-Annotation-with-TypeScript",
+      "computer-science-project2.0",
+      "illustrates.dev-platform-v2",
+      "node-express-course-1",
+      "starter-setup"
     ],
     "Redis": [
       "illustrates.dev-platform-v2"
     ],
     "MongoDB": [
-      "illustrates.dev-platform-v2"
+      "11-projects-portfolio",
+      "illustrates.dev-platform-v2",
+      "node-express-course-1",
+      "starter-setup"
     ],
     "React": [
-      "illustrates.dev-platform-v2"
+      "11-projects-portfolio",
+      "computer-science-project2.0",
+      "create-react-app-lambda",
+      "illustrates.dev-platform-v2",
+      "starter-setup"
     ],
     "Zod": [
       "illustrates.dev-platform-v2"
     ],
     "Jest": [
+      "11-projects-portfolio",
+      "computer-science-project2.0",
       "illustrates.dev-platform-v2"
     ],
     "Next.js": [
@@ -64,16 +72,58 @@
       "illustrates.dev-platform-v2"
     ],
     "Zustand": [
+      "computer-science-project2.0",
       "illustrates.dev-platform-v2"
     ],
     "Tailwind CSS": [
+      "computer-science-project2.0",
       "illustrates.dev-platform-v2"
     ],
+    "Docker": [
+      "ML_ToxicitY",
+      "computer-science-project2.0",
+      "illustrates.dev-platform-v2",
+      "java-app",
+      "node-express-course-1"
+    ],
     "Docker Compose": [
-      "illustrates.dev-platform-v2"
+      "computer-science-project2.0",
+      "illustrates.dev-platform-v2",
+      "node-express-course-1"
     ],
     "Nginx": [
       "illustrates.dev-platform-v2"
+    ],
+    "Vercel": [
+      "node-express-course-1"
+    ],
+    "GitHub Actions": [
+      "github-final-project"
+    ],
+    "Redux": [
+      "11-projects-portfolio",
+      "computer-science-project2.0"
+    ],
+    "Vite": [
+      "computer-science-project2.0"
+    ],
+    "webpack": [
+      "computer-science-project2.0"
+    ],
+    "Socket.IO": [
+      "computer-science-project2.0"
+    ],
+    "FastAPI": [
+      "ML_ToxicitY"
+    ],
+    "PyTorch": [
+      "ML_ToxicitY"
+    ],
+    "Hugging Face": [
+      "ML_ToxicitY"
+    ],
+    "styled-components": [
+      "11-projects-portfolio"
     ]
   }
 }
