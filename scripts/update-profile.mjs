@@ -142,13 +142,24 @@ function lcg(seed) { // mirrors lcg() in the generator; BigInt keeps the maths e
 }
 function pattern(layout, w, h, mode) {
   const [ea, eb] = tones(mode), base = BASE[mode], hh = Math.min(h, 200);
-  if (layout === "starlines") {
+  if (layout === "starlines" || layout === "starlines_bright" || layout === "starlines_glow") {
+    const strong = layout !== "starlines";
     const cx = w * 0.82, cy = h * 0.5, rnd = lcg(1241); let out = "";
-    for (let i = 0; i < 120; i++) {
-      const ang = rnd() * 2 * Math.PI, ln = hh * (0.1 + rnd() * 0.5), c = rnd() < 0.5 ? ea : eb;
-      out += `<line x1="${f1(cx)}" y1="${f1(cy)}" x2="${f1(cx + Math.cos(ang) * ln)}" y2="${f1(cy + Math.sin(ang) * ln)}" stroke="${c}" stroke-opacity=".5" stroke-width=".8"/>`;
+    const [n, op, sw, reach] = strong ? [160, 0.85, 1.2, 0.6] : [120, 0.5, 0.8, 0.5];
+    const ca = strong && EFF(mode) === "dark" ? mix(ea, "#ffffff", 0.25) : ea;
+    for (let i = 0; i < n; i++) {
+      const ang = rnd() * 2 * Math.PI, ln = hh * (0.12 + rnd() * reach), c = rnd() < 0.5 ? ca : eb;
+      out += `<line x1="${f1(cx)}" y1="${f1(cy)}" x2="${f1(cx + Math.cos(ang) * ln)}" y2="${f1(cy + Math.sin(ang) * ln)}" stroke="${c}" stroke-opacity="${op}" stroke-width="${sw}" stroke-linecap="round"/>`;
     }
-    return ["", out];
+    if (!strong) return ["", out];
+    const fx = (cx / w).toFixed(3);
+    let defs = `<radialGradient id="core" cx="${fx}" cy=".5" r="${(hh * 0.45 / w).toFixed(3)}" gradientTransform="translate(${fx} .5) scale(1 ${(w / h).toFixed(3)}) translate(-${fx} -.5)">`
+      + `<stop offset="0" stop-color="${ca}" stop-opacity=".55"/><stop offset="1" stop-color="${ca}" stop-opacity="0"/></radialGradient>`;
+    if (layout === "starlines_glow") {
+      defs += `<filter id="sg" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="${(hh * 0.012).toFixed(1)}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+      out = `<g filter="url(#sg)">${out}</g>`;
+    }
+    return [defs, `<rect width="${w}" height="${h}" fill="url(#core)"/>` + out + `<circle cx="${f1(cx)}" cy="${f1(cy)}" r="${(hh * 0.03).toFixed(1)}" fill="#ffffff" fill-opacity=".9"/>`];
   }
   if (layout === "marble") {
     const [fx, fy] = w > 500 ? [0.006, 0.012] : [0.012, 0.02];
@@ -180,7 +191,7 @@ function pattern(layout, w, h, mode) {
 }
 function surface(w, h, mode, strength = 0.55, rx = 10) {
   const [ea, eb] = tones(mode), base = BASE[mode];
-  const [lo, mid, hi] = [0.05, 0.18, 0.42]; // generated cards carry text across the full width
+  const [lo, mid, hi] = LAYOUT === "starlines_bright" || LAYOUT === "starlines_glow" ? [0.06, 0.3, 0.65] : [0.05, 0.18, 0.42]; // cards carry text
   const [pdefs, body] = pattern(LAYOUT, w, h, mode);
   return `<defs>${pdefs}<linearGradient id="fd" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="${lo}"/><stop offset=".45" stop-color="#fff" stop-opacity="${mid}"/><stop offset=".7" stop-color="#fff" stop-opacity="${hi}"/></linearGradient>`
     + `<mask id="fm"><rect width="${w}" height="${h}" fill="url(#fd)"/></mask>`

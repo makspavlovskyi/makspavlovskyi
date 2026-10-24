@@ -58,12 +58,25 @@ def pattern(layout, w, h, mode, big):
     """Inner artwork for one layout; returns (defs, body)."""
     mode = EFF(mode)
     ea, eb = tones(mode); base = BASE[mode]
-    if layout == "starlines":
+    if layout in ("starlines", "starlines_bright", "starlines_glow"):
+        strong = layout != "starlines"
         cx, cy = w * .82, h * .5; rnd = lcg(1241); out = ""
-        for _ in range(120):
-            ang = rnd() * 2 * math.pi; ln = min(h, 200) * (.1 + rnd() * .5); c = ea if rnd() < .5 else eb
-            out += f'<line x1="{cx:.1f}" y1="{cy:.1f}" x2="{cx + math.cos(ang)*ln:.1f}" y2="{cy + math.sin(ang)*ln:.1f}" stroke="{c}" stroke-opacity=".5" stroke-width=".8"/>'
-        return "", out
+        n, op, sw, reach = (160, .85, 1.2, .6) if strong else (120, .5, .8, .5)
+        ca = mix(ea, "#ffffff", .25) if strong and mode == "dark" else ea
+        for _ in range(n):
+            ang = rnd() * 2 * math.pi; ln = min(h, 200) * (.12 + rnd() * reach); c = ca if rnd() < .5 else eb
+            out += f'<line x1="{cx:.1f}" y1="{cy:.1f}" x2="{cx + math.cos(ang)*ln:.1f}" y2="{cy + math.sin(ang)*ln:.1f}" stroke="{c}" stroke-opacity="{op}" stroke-width="{sw}" stroke-linecap="round"/>'
+        if not strong:
+            return "", out
+        hh = min(h, 200)
+        defs = (f'<radialGradient id="core" cx="{cx/w:.3f}" cy=".5" r="{hh*.45/w:.3f}" gradientTransform="translate({cx/w:.3f} .5) scale(1 {w/h:.3f}) translate(-{cx/w:.3f} -.5)">'
+                f'<stop offset="0" stop-color="{ca}" stop-opacity=".55"/><stop offset="1" stop-color="{ca}" stop-opacity="0"/></radialGradient>')
+        if layout == "starlines_glow":
+            defs += (f'<filter id="sg" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="{hh*.012:.1f}" result="b"/>'
+                     f'<feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>')
+            out = f'<g filter="url(#sg)">{out}</g>'
+        return defs, (f'<rect width="{w}" height="{h}" fill="url(#core)"/>' + out
+                      + f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{hh*.03:.1f}" fill="#ffffff" fill-opacity=".9"/>')
     if layout == "marble":
         fx, fy = (.006, .012) if w > 500 else (.012, .02)
         return ((f'<linearGradient id="lq" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{ea}"/><stop offset=".5" stop-color="{base}"/><stop offset="1" stop-color="{eb}"/></linearGradient>'
@@ -93,7 +106,7 @@ def pattern(layout, w, h, mode, big):
 def surface(w, h, mode, strength=0.55, rx=10):
     mode = EFF(mode)
     ea, eb = tones(mode); base = BASE[mode]; big = strength >= 1   # full strength only on the banner
-    lo, mid, hi = (.12, .55, 1) if big else (.05, .18, .42)       # cards carry text across the full width
+    lo, mid, hi = (.12, .55, 1) if big else ((.06, .3, .65) if LAYOUT in ("starlines_bright", "starlines_glow") else (.05, .18, .42))
     pdefs, body = pattern(LAYOUT, w, h, mode, big)
     return (f'<defs>{pdefs}<linearGradient id="fd" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="{lo}"/><stop offset=".45" stop-color="#fff" stop-opacity="{mid}"/><stop offset=".7" stop-color="#fff" stop-opacity="{hi}"/></linearGradient>'
             f'<mask id="fm"><rect width="{w}" height="{h}" fill="url(#fd)"/></mask>'
