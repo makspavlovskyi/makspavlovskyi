@@ -130,7 +130,7 @@ def build_banner():
             for row in range(7):
                 wts = [5, 3, 2, 2, 1] if col < 4 else [3, 2, 3, 3, 2]
                 cells += f'<rect x="{612+col*17}" y="{52+row*17}" width="13" height="13" rx="2.5" fill="{tiles[rnd.choices(range(5), weights=wts)[0]]}"/>'
-        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="880" height="200" viewBox="0 0 880 200" role="img" aria-label="whoami: Maks Pavlovskyi, software engineer, TypeScript, React, Node. Now building illustrates.dev">\n'
+        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="880" height="200" viewBox="0 0 880 200" role="img" aria-label="whoami: Maks Pavlovskyi, software engineer, SaaS, TypeScript, React, Node. Now building illustrates.dev">\n'
                + surface(880, 200, mode, 1.0) + "\n"
                f'<path d="M0.5 36 H879.5" stroke="{t["border"]}" stroke-opacity="0.7"/>\n'
                '<circle cx="22" cy="18" r="5.5" fill="#ff5f57"/><circle cx="40" cy="18" r="5.5" fill="#febc2e"/><circle cx="58" cy="18" r="5.5" fill="#28c840"/>\n'
@@ -138,7 +138,7 @@ def build_banner():
                f'<g font-family="{MONO}" font-size="17">\n'
                f'<text x="28" y="72" fill="{prompt}">$ <tspan fill="{t["fg"]}">whoami</tspan></text>\n'
                f'<text x="28" y="104" fill="{t["fg"]}" font-size="30" font-weight="600">Maks Pavlovskyi</text>\n'
-               f'<text x="28" y="128" fill="{t["muted"]}">software engineer · TypeScript · React · Node</text>\n'
+               f'<text x="28" y="128" fill="{t["muted"]}">software engineer · SaaS · TypeScript · React · Node</text>\n'
                f'<text x="28" y="162" fill="{prompt}">$ <tspan fill="{t["fg"]}">now</tspan> <tspan fill="{t["muted"]}">→</tspan> <tspan fill="{t["fg"]}">building illustrates.dev</tspan></text>\n'
                f'<rect x="366" y="148" width="9" height="18" fill="{prompt}"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1.1s" repeatCount="indefinite"/></rect>\n'
                f'</g>\n<g>{cells}</g>\n</svg>\n')
@@ -246,7 +246,7 @@ STREAK_LIGHT, STREAK_DARK = _streak("light"), _streak("dark")
 
 readme = f"""<picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
-  <img alt="$ whoami: Maks Pavlovskyi, software engineer, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
+  <img alt="$ whoami: Maks Pavlovskyi, software engineer, SaaS, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
 </picture>
 
 <p>
