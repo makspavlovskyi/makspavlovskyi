@@ -60,7 +60,8 @@ def pattern(layout, w, h, mode, big):
     ea, eb = tones(mode); base = BASE[mode]
     if layout in ("starlines", "starlines_bright", "starlines_glow"):
         strong = layout != "starlines"
-        cx, cy = w * .82, h * .5; rnd = lcg(1241); out = ""
+        # original variant on the banner: burst sits in the free space between the text and the tiles
+        cx, cy = (w * .6 if (big and not strong) else w * .82), h * .5; rnd = lcg(1241); out = ""
         n, op, sw, reach = (160, .85, 1.2, .6) if strong else (120, .5, .8, .5)
         ca = mix(ea, "#ffffff", .25) if strong and mode == "dark" else ea
         for _ in range(n):
