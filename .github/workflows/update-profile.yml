@@ -48,14 +48,15 @@ jobs:
 
   snake:
     name: Contribution snake
+    # colours match the Black Gold palette in profile.config.json (black in both themes)
     runs-on: ubuntu-latest
     steps:
       - uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/github-snake.svg?color_snake=#882e08&color_dots=#ebedf0,#e7b39e,#d47a55,#c2410c,#882e08
-            dist/github-snake-dark.svg?palette=github-dark&color_snake=#d17049&color_dots=#161b22,#431f14,#712b11,#a73a0e,#cb5e30
+            dist/github-snake.svg?palette=github-dark&color_snake=#e8c76b&color_dots=#1b1b1b,#4a3d18,#806824,#c09a33,#e5bf58&color_background=#0a0a0a
+            dist/github-snake-dark.svg?palette=github-dark&color_snake=#e8c76b&color_dots=#1b1b1b,#4a3d18,#806824,#c09a33,#e5bf58&color_background=#0a0a0a
       - uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: output

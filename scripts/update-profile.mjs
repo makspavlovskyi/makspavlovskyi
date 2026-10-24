@@ -123,11 +123,17 @@ const LANG_COLOR = {
 // Theme: colours + background layout come from profile.config.json (same layouts as the README generator).
 const CFG = JSON.parse(await readFile(new URL("profile.config.json", ROOT), "utf8"));
 const LAYOUT = process.env.PROFILE_LAYOUT ?? CFG.layout;
-const [COPPER, TEAL] = CFG.colors;
-const BASE = { light: "#ffffff", dark: "#0d1117" };
+const PAL = CFG.palettes[process.env.PROFILE_PALETTE ?? CFG.palette];
+const [COPPER, TEAL] = PAL.colors;            // first and second colour of the palette
+const ACCENT = PAL.accent ?? COPPER;
+const EFF = (mode) => (PAL.always_dark ? "dark" : mode); // cards stay dark on GitHub's light theme
+const BASE = { light: "#ffffff", dark: PAL.dark?.base ?? "#0d1117" };
+for (const [k, v] of Object.entries(PAL.dark ?? {})) if (k in THEME.dark) THEME.dark[k] = v;
+THEME.dark.bg = BASE.dark;
+if (!PAL.dark?.bar) THEME.light.bar = ACCENT;
 const hex = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
 const mix = (a, b, t) => "#" + hex(a).map((x, i) => Math.round(x + (hex(b)[i] - x) * t).toString(16).padStart(2, "0")).join("");
-const tones = (mode) => (mode === "light" ? [COPPER, TEAL] : [mix(COPPER, "#ffffff", 0.12), mix(TEAL, "#ffffff", 0.12)]);
+const tones = (mode) => (EFF(mode) === "light" ? [COPPER, TEAL] : [mix(COPPER, "#ffffff", 0.12), mix(TEAL, "#ffffff", 0.12)]);
 const GLOW = { light: { base: BASE.light }, dark: { base: BASE.dark } };
 const f1 = (n) => n.toFixed(1);
 function lcg(seed) { // mirrors lcg() in the generator; BigInt keeps the maths exact
@@ -293,9 +299,10 @@ const tools = Object.entries(toolRepos).map(([k, s]) => [k, s.size]).sort((a, b)
 
 await mkdir(OUT, { recursive: true });
 for (const mode of ["light", "dark"]) {
-  await writeFile(new URL(`languages-${mode}.svg`, OUT), languagesSvg(langs, repos.length, mode));
-  await writeFile(new URL(`tools-${mode}.svg`, OUT), toolsSvg(tools, repos.length, mode));
-  await writeFile(new URL(`activity-${mode}.svg`, OUT), activitySvg(repos, mode));
+  const m = EFF(mode);
+  await writeFile(new URL(`languages-${mode}.svg`, OUT), languagesSvg(langs, repos.length, m));
+  await writeFile(new URL(`tools-${mode}.svg`, OUT), toolsSvg(tools, repos.length, m));
+  await writeFile(new URL(`activity-${mode}.svg`, OUT), activitySvg(repos, m));
 }
 await writeFile(new URL("stats.json", OUT), JSON.stringify({
   repos: repos.length,

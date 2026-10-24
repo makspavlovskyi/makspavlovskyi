@@ -1,5 +1,18 @@
 {
   "layout": "starlines",
-  "colors": ["#c2410c", "#0f766e"],
-  "layouts": ["starlines", "marble", "stripes", "topographic"]
+  "palette": "blackgold",
+  "layouts": ["starlines", "marble", "stripes", "topographic"],
+  "palettes": {
+    "blackgold": {
+      "colors": ["#d4a017", "#8a6a12"],
+      "accent": "#e0b43a",
+      "always_dark": true,
+      "dark": { "base": "#0a0a0a", "fg": "#f5f5f4", "muted": "#a8a29e", "border": "#3f3a33", "link": "#e8c04a", "bar": "#e0b43a", "soft": "#1c1a17" }
+    },
+    "copperteal": {
+      "colors": ["#c2410c", "#0f766e"],
+      "accent": "#c2410c",
+      "always_dark": false
+    }
+  }
 }

@@ -29,13 +29,19 @@ LINE = {
 import json, math
 CFG = json.load(open(f"{R}/profile.config.json"))
 LAYOUT = os.environ.get("PROFILE_LAYOUT", CFG["layout"])
-COPPER, TEAL = CFG["colors"]
+PAL = CFG["palettes"][os.environ.get("PROFILE_PALETTE", CFG["palette"])]
+COPPER, TEAL = PAL["colors"]          # first and second colour of the palette
+ACCENT = PAL.get("accent", COPPER)    # tiles, prompt and cursor
+ALWAYS_DARK = PAL.get("always_dark", False)
+def EFF(mode): return "dark" if ALWAYS_DARK else mode   # banner and cards stay dark on GitHub's light theme
 def mix(a, b, t):
     a = tuple(int(a[i:i+2], 16) for i in (1, 3, 5)); b = tuple(int(b[i:i+2], 16) for i in (1, 3, 5))
     return "#%02x%02x%02x" % tuple(round(x + (y - x) * t) for x, y in zip(a, b))
-BASE = {"light": "#ffffff", "dark": "#0d1117"}
+BASE = {"light": "#ffffff", "dark": PAL.get("dark", {}).get("base", "#0d1117")}
+THEME["dark"] = {**THEME["dark"], **{k: v for k, v in PAL.get("dark", {}).items() if k in THEME["dark"]}, "bg": BASE["dark"]}
 
 def tones(mode):
+    mode = EFF(mode)
     if mode == "light":
         return COPPER, TEAL
     return mix(COPPER, "#ffffff", .12), mix(TEAL, "#ffffff", .12)
@@ -50,6 +56,7 @@ def lcg(seed):  # tiny deterministic RNG, mirrored in update-profile.mjs
 
 def pattern(layout, w, h, mode, big):
     """Inner artwork for one layout; returns (defs, body)."""
+    mode = EFF(mode)
     ea, eb = tones(mode); base = BASE[mode]
     if layout == "starlines":
         cx, cy = w * .82, h * .5; rnd = lcg(1241); out = ""
@@ -84,6 +91,7 @@ def pattern(layout, w, h, mode, big):
     raise ValueError(f"unknown layout {layout}")
 
 def surface(w, h, mode, strength=0.55, rx=10):
+    mode = EFF(mode)
     ea, eb = tones(mode); base = BASE[mode]; big = strength >= 1   # full strength only on the banner
     lo, mid, hi = (.12, .55, 1) if big else (.05, .18, .42)       # cards carry text across the full width
     pdefs, body = pattern(LAYOUT, w, h, mode, big)
@@ -98,11 +106,11 @@ def surface(w, h, mode, strength=0.55, rx=10):
 MONO = 'ui-monospace,SFMono-Regular,&quot;SF Mono&quot;,Menlo,Consolas,&quot;Liberation Mono&quot;,monospace'
 def build_banner():
     import random
-    for mode in ("light", "dark"):
-        t = THEME[mode]
-        tiles = (["#ebedf0", mix(COPPER, "#ffffff", .6), mix(COPPER, "#ffffff", .3), COPPER, mix(COPPER, "#000000", .3)] if mode == "light" else
-                 ["#161b22", mix(COPPER, BASE["dark"], .7), mix(COPPER, BASE["dark"], .45), mix(COPPER, BASE["dark"], .15), mix(COPPER, "#ffffff", .15)])
-        prompt = COPPER if mode == "light" else mix(COPPER, "#ffffff", .25)
+    for out_mode in ("light", "dark"):
+        mode = EFF(out_mode); t = THEME[mode]
+        tiles = (["#ebedf0", mix(ACCENT, "#ffffff", .6), mix(ACCENT, "#ffffff", .3), ACCENT, mix(ACCENT, "#000000", .3)] if mode == "light" else
+                 [mix(BASE["dark"], "#ffffff", .07), mix(ACCENT, BASE["dark"], .7), mix(ACCENT, BASE["dark"], .45), mix(ACCENT, BASE["dark"], .15), mix(ACCENT, "#ffffff", .15)])
+        prompt = ACCENT if mode == "light" else mix(ACCENT, "#ffffff", .25)
         rnd = random.Random(7); cells = ""
         for col in range(14):
             for row in range(7):
@@ -120,7 +128,7 @@ def build_banner():
                f'<text x="28" y="162" fill="{prompt}">$ <tspan fill="{t["fg"]}">now</tspan> <tspan fill="{t["muted"]}">→</tspan> <tspan fill="{t["fg"]}">building illustrates.dev</tspan></text>\n'
                f'<rect x="366" y="148" width="9" height="18" fill="{prompt}"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1.1s" repeatCount="indefinite"/></rect>\n'
                f'</g>\n<g>{cells}</g>\n</svg>\n')
-        open(f"{R}/assets/banner-{mode}.svg", "w").write(svg)
+        open(f"{R}/assets/banner-{out_mode}.svg", "w").write(svg)
 
 def icon(name, color, x, y, size=16):
     s = size / 24
@@ -199,7 +207,7 @@ for mode in ("light", "dark"):
     for key, label, ico, _, style in SUPPORT:
         open(f"{R}/assets/buttons/{key}-{mode}.svg", "w").write(button(label, ico, mode, style))
     for p in PROJECTS:
-        open(f"{R}/assets/cards/{p[0]}-{mode}.svg", "w").write(card(*p, mode))
+        open(f"{R}/assets/cards/{p[0]}-{mode}.svg", "w").write(card(*p, EFF(mode)))
 
 def pic(light, dark, alt, extra=""):
     return (f'<picture><source media="(prefers-color-scheme: dark)" srcset="{dark}">'
@@ -216,8 +224,11 @@ cards = "\n".join(
     for p in PROJECTS)
 SNAKE = "https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/"
 STREAK = "https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true"
-STREAK_LIGHT = "&background=FFFFFF&ring=C2410C&fire=C2410C&currStreakLabel=C2410C"
-STREAK_DARK = "&theme=dark&background=0D1117&ring=E0703F&fire=E0703F&currStreakLabel=E0703F"
+def _streak(mode):
+    m = EFF(mode); c = (ACCENT if m == "light" else mix(ACCENT, "#ffffff", .2)).lstrip("#").upper()
+    bg = "FFFFFF" if m == "light" else BASE["dark"].lstrip("#").upper()
+    return ("" if m == "light" else "&theme=dark") + f"&background={bg}&ring={c}&fire={c}&currStreakLabel={c}"
+STREAK_LIGHT, STREAK_DARK = _streak("light"), _streak("dark")
 
 readme = f"""<picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
