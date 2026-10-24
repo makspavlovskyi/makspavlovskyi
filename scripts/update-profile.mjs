@@ -36,7 +36,7 @@ async function ghAll(path) {
   return all;
 }
 
-const MANIFEST = /(^|\/)(package\.json|requirements[^/]*\.txt|pyproject\.toml)$/;
+const MANIFEST = /(^|\/)(package\.json|requirements[^/]*\.txt|pyproject\.toml|(docker-)?compose[^/]*\.ya?ml)$/;
 const SKIP_DIR = /(^|\/)(node_modules|vendor|dist|build|\.next)\//;
 
 async function collect() {
@@ -73,14 +73,20 @@ const NPM = {
   jest: "Jest", vitest: "Vitest", "@playwright/test": "Playwright", cypress: "Cypress", mocha: "Mocha",
   vite: "Vite", webpack: "webpack", electron: "Electron", three: "Three.js", zod: "Zod",
   commander: "Commander", inquirer: "Inquirer", openai: "OpenAI API", "@anthropic-ai/sdk": "Claude API",
-  remotion: "Remotion", "react-native": "React Native", expo: "Expo",
+  remotion: "Remotion", "prom-client": "Prometheus", "react-native": "React Native", expo: "Expo",
 };
 const PY = {
   fastapi: "FastAPI", django: "Django", flask: "Flask", sqlalchemy: "SQLAlchemy", pydantic: "Pydantic",
   pandas: "pandas", numpy: "NumPy", "scikit-learn": "scikit-learn", torch: "PyTorch", tensorflow: "TensorFlow",
   transformers: "Hugging Face", "opencv-python": "OpenCV", streamlit: "Streamlit", celery: "Celery", pytest: "pytest",
 };
+// Services run from compose files, matched on the image name without registry or tag.
+const IMAGES = {
+  mongo: "MongoDB", redis: "Redis", minio: "MinIO", nginx: "Nginx", prometheus: "Prometheus", grafana: "Grafana",
+  postgres: "PostgreSQL", mysql: "MySQL", mariadb: "MariaDB", rabbitmq: "RabbitMQ", elasticsearch: "Elasticsearch", traefik: "Traefik",
+};
 const FILES = [
+  [/(^|\/)prometheus\.ya?ml$/, "Prometheus"],
   [/(^|\/)Dockerfile[^/]*$/, "Docker"],
   [/(^|\/)(docker-)?compose\.ya?ml$/, "Docker Compose"],
   [/^\.github\/workflows\/[^/]+\.ya?ml$/, "GitHub Actions"],
@@ -98,6 +104,11 @@ function detect(repo) {
       try { pkg = JSON.parse(text); } catch { continue; }
       const deps = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
       for (const d of Object.keys(deps)) if (NPM[d]) found.add(NPM[d]);
+    } else if (/compose[^/]*\.ya?ml$/.test(path)) {
+      for (const [, image] of text.matchAll(/^\s*image:\s*["']?([^\s"'#]+)/gm)) {
+        const name = image.split("/").pop().split(/[:@]/)[0];
+        if (IMAGES[name]) found.add(IMAGES[name]);
+      }
     } else {
       for (const [key, label] of Object.entries(PY)) {
         if (new RegExp(`(^|["'\\s])${key.replace(/[-]/g, "[-_]")}([<>=~!\\[\\s"';,]|$)`, "mi").test(text)) found.add(label);
