@@ -3,11 +3,7 @@
   <img alt="$ whoami: Maks Pavlovskyi, full-stack, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
 </picture>
 
-<p>
-<a href="https://buymeacoffee.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/bmc-dark.svg"><img src="assets/buttons/bmc-light.svg" alt="Buy me a coffee" align="right"></picture></a>
-<a href="https://www.patreon.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/patreon-dark.svg"><img src="assets/buttons/patreon-light.svg" alt="Patreon" align="right"></picture></a>
 I build web products end to end with TypeScript, React and Node.
-</p>
 
 <p>
 <a href="https://client.illustrates.dev/main-dashboard"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/site-dark.svg"><img src="assets/buttons/site-light.svg" alt="illustrates.dev"></picture></a>
@@ -15,6 +11,8 @@ I build web products end to end with TypeScript, React and Node.
 <a href="https://linkedin.com/in/maksym-pavlovskyi-536647267"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/linkedin-dark.svg"><img src="assets/buttons/linkedin-light.svg" alt="LinkedIn"></picture></a>
 <a href="https://medium.com/@pavlovskymaxym4"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/medium-dark.svg"><img src="assets/buttons/medium-light.svg" alt="Medium"></picture></a>
 <a href="mailto:illustrates.service@gmail.com"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/email-dark.svg"><img src="assets/buttons/email-light.svg" alt="Email"></picture></a>
+<a href="https://www.patreon.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/patreon-dark.svg"><img src="assets/buttons/patreon-light.svg" alt="Patreon"></picture></a>
+<a href="https://buymeacoffee.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/bmc-dark.svg"><img src="assets/buttons/bmc-light.svg" alt="Buy me a coffee"></picture></a>
 </p>
 
 ### Selected work
@@ -35,7 +33,15 @@ Measured daily from the code in my public repos: language share from GitHub's by
 
 ### Activity
 
-<a href="https://github.com/makspavlovskyi?tab=repositories&sort=updated"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark.svg"><img src="assets/generated/activity-light.svg" alt="My most recently pushed public repositories" width="100%"></picture></a>
+<!-- activity:start (filled by scripts/update-profile.mjs: one linked card per repo) -->
+Recently worked on · last code change in my public repos, click one to open it
+
+<a href="https://github.com/makspavlovskyi/10kWebSite"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-0.svg"><img src="assets/generated/activity-light-0.svg" alt="10kWebSite, last code change 2026-08-24" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/node-express-course-1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-1.svg"><img src="assets/generated/activity-light-1.svg" alt="node-express-course-1, last code change 2026-05-24" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/illustrates.dev-platform-v2"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-2.svg"><img src="assets/generated/activity-light-2.svg" alt="illustrates.dev-platform-v2, last code change 2026-05-13" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/java-app"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-3.svg"><img src="assets/generated/activity-light-3.svg" alt="java-app, last code change 2026-05-11" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/oaqjp-final-project-emb-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-4.svg"><img src="assets/generated/activity-light-4.svg" alt="oaqjp-final-project-emb-ai, last code change 2026-05-07" width="100%"></picture></a>
+<!-- activity:end -->
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0A0A0A&ring=E6C361&fire=E6C361&currStreakLabel=E6C361"><img src="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0A0A0A&ring=E6C361&fire=E6C361&currStreakLabel=E6C361" alt="GitHub streak for makspavlovskyi"></picture>
 

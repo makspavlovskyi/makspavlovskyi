@@ -35,5 +35,8 @@
       "accent": "#c2410c",
       "always_dark": false
     }
-  }
+  },
+  "activity_exclude": [
+    "contrib-graph"
+  ]
 }
