@@ -274,7 +274,7 @@ Measured daily from the code in my public repos: language share from GitHub's by
 
 ### Activity
 
-<!-- activity:start (filled by scripts/update-profile.mjs: one linked strip per repo) -->
+<!-- activity:start (filled by scripts/update-profile.mjs: one linked card per repo) -->
 <a href="https://github.com/makspavlovskyi?tab=repositories&sort=updated">{pic("assets/generated/activity-light.svg", "assets/generated/activity-dark.svg", "My most recently pushed public repositories", ' width="100%"')}</a>
 <!-- activity:end -->
 

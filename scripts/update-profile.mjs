@@ -268,15 +268,14 @@ function fit(s, size, maxW) {
   return s.trimEnd() + "…";
 }
 
-function activitySvg(repos, mode) {
+function activitySvg(recent, mode) {
   const t = THEME[mode];
-  const recent = [...repos].sort((a, b) => b.pushed_at.localeCompare(a.pushed_at)).slice(0, 5);
   const rowH = 58, top = 58, lineX = 128;
   const H = top + (Math.max(1, recent.length) - 1) * rowH + 56;
   let rows = "";
   recent.forEach((r, i) => {
     const y = top + i * rowH;
-    const d = new Date(r.pushed_at);
+    const d = new Date(r.active_at);
     const lang = Object.entries(r.languages ?? {}).sort((a, b) => b[1] - a[1])[0]?.[0];
     const color = LANG_COLOR[lang] ?? "#8b949e";
     const langW = lang ? textW(lang, 12) + 22 : 0;
@@ -291,7 +290,7 @@ function activitySvg(repos, mode) {
   });
   if (!recent.length) rows = `<text x="24" y="${top + 13}" fill="${t.muted}" font-family="${SANS}" font-size="13">No public activity yet.</text>`;
   const line = recent.length > 1 ? `<path d="M${lineX} ${top + 8} V${top + (recent.length - 1) * rowH + 8}" stroke="${t.border}" stroke-width="2"/>` : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Recently pushed repositories: ${recent.map((r) => `${r.name} on ${r.pushed_at.slice(0, 10)}`).join(", ")}">`
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Recently worked on: ${recent.map((r) => `${r.name} on ${r.active_at.slice(0, 10)}`).join(", ")}">`
     + surface(W, H, mode)
     + `<text x="24" y="34" fill="${t.fg}" font-family="${SANS}" font-size="14" font-weight="600">Recently pushed <tspan fill="${t.muted}" font-weight="400">· my 5 latest public repos</tspan></text>`
     + line + rows + `</svg>\n`;
@@ -303,7 +302,7 @@ function activitySvg(repos, mode) {
 function activityRowSvg(r, i, count, mode) {
   const t = THEME[mode];
   const H = 66, lineX = 128, dotY = 26;
-  const d = new Date(r.pushed_at);
+  const d = new Date(r.active_at);
   const lang = Object.entries(r.languages ?? {}).sort((a, b) => b[1] - a[1])[0]?.[0];
   const color = LANG_COLOR[lang] ?? "#8b949e";
   const langW = lang ? textW(lang, 12) + 22 : 0;
@@ -311,7 +310,7 @@ function activityRowSvg(r, i, count, mode) {
   const desc = r.description?.trim() ? fit(r.description.trim(), 13, textMax) : "";
   const line = (i > 0 ? `<path d="M${lineX} 0 V${dotY}" stroke="${t.border}" stroke-width="2"/>` : "")
     + (i < count - 1 ? `<path d="M${lineX} ${dotY} V${H}" stroke="${t.border}" stroke-width="2"/>` : "");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(r.name)}, pushed ${r.pushed_at.slice(0, 10)}">`
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(r.name)}, last code change ${r.active_at.slice(0, 10)}">`
     + `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="10" fill="${BASE[mode]}" stroke="${t.border}"/>`
     + line
     + `<text x="${lineX - 22}" y="${dotY + 5}" text-anchor="end" fill="${t.fg}" font-family="${SANS}" font-size="13" font-weight="500" style="font-variant-numeric:tabular-nums">${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}</text>`
@@ -334,22 +333,46 @@ for (const r of repos) {
 const langs = Object.entries(langTotals).sort((a, b) => b[1] - a[1]);
 const tools = Object.entries(toolRepos).map(([k, s]) => [k, s.size]).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
-const recent = [...repos].sort((a, b) => b.pushed_at.localeCompare(a.pushed_at)).slice(0, 5);
+// Timeline dates come from the last commit that changed code, not GitHub's pushed_at:
+// a README tidy-up or a package.json link fix shouldn't make a repo look worked on today.
+const DOC = /(^|\/)[^/]+\.(md|markdown)$|(^|\/)LICENSE[^/]*$/i;
+const linksOnly = (f) => /(^|\/)package\.json$/.test(f.filename) && f.patch
+  && f.patch.split("\n").filter((l) => /^[+-](?![+-])/.test(l)).every((l) => /"(url|homepage)"\s*:/.test(l));
+async function lastCodeChange(r) {
+  if (process.env.FIXTURE) return r.pushed_at;
+  const full = new URL(r.html_url).pathname.slice(1);
+  for (const c of (await gh(`/repos/${full}/commits?per_page=30`)) ?? []) {
+    const detail = await gh(`/repos/${full}/commits/${c.sha}`);
+    if (detail?.files?.some((f) => !DOC.test(f.filename) && !linksOnly(f))) return c.commit.author.date;
+  }
+  return r.pushed_at;
+}
+const EXCLUDE = new Set((CFG.activity_exclude ?? []).map((n) => n.toLowerCase()));
+const candidates = repos.filter((r) => !EXCLUDE.has(r.name.toLowerCase()))
+  .sort((a, b) => b.pushed_at.localeCompare(a.pushed_at));
+const dated = [];
+for (const r of candidates) {
+  // active_at <= pushed_at, so once 5 are dated, older pushes can't make the list
+  const fifth = [...dated].sort((a, b) => b.active_at.localeCompare(a.active_at))[4];
+  if (fifth && r.pushed_at < fifth.active_at) break;
+  dated.push({ ...r, active_at: await lastCodeChange(r) });
+}
+const recent = dated.sort((a, b) => b.active_at.localeCompare(a.active_at)).slice(0, 5);
 await mkdir(OUT, { recursive: true });
 for (const mode of ["light", "dark"]) {
   const m = EFF(mode);
   await writeFile(new URL(`languages-${mode}.svg`, OUT), languagesSvg(langs, repos.length, m));
   await writeFile(new URL(`tools-${mode}.svg`, OUT), toolsSvg(tools, repos.length, m));
-  await writeFile(new URL(`activity-${mode}.svg`, OUT), activitySvg(repos, m));
+  await writeFile(new URL(`activity-${mode}.svg`, OUT), activitySvg(recent, m));
   for (const [i, r] of recent.entries())
     await writeFile(new URL(`activity-${mode}-${i}.svg`, OUT), activityRowSvg(r, i, recent.length, m));
 }
 
 const rows = recent.map((r, i) => `<a href="${r.html_url}"><picture>`
   + `<source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-${i}.svg">`
-  + `<img src="assets/generated/activity-light-${i}.svg" alt="${esc(r.name)}, pushed ${r.pushed_at.slice(0, 10)}" width="100%"></picture></a>`).join("<br>\n");
+  + `<img src="assets/generated/activity-light-${i}.svg" alt="${esc(r.name)}, last code change ${r.active_at.slice(0, 10)}" width="100%"></picture></a>`).join("<br>\n");
 const activityMd = recent.length
-  ? `Recently pushed · my ${recent.length} latest public repos, click one to open it\n\n${rows}`
+  ? `Recently worked on · last code change in my public repos, click one to open it\n\n${rows}`
   : "No public activity yet.";
 const readmeUrl = new URL("README.md", ROOT);
 const readme = await readFile(readmeUrl, "utf8");

@@ -35,14 +35,14 @@ Measured daily from the code in my public repos: language share from GitHub's by
 
 ### Activity
 
-<!-- activity:start (filled by scripts/update-profile.mjs: one linked strip per repo) -->
-Recently pushed · my 5 latest public repos, click one to open it
+<!-- activity:start (filled by scripts/update-profile.mjs: one linked card per repo) -->
+Recently worked on · last code change in my public repos, click one to open it
 
-<a href="https://github.com/makspavlovskyi/git-helper"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-0.svg"><img src="assets/generated/activity-light-0.svg" alt="git-helper, pushed 2026-10-23" width="100%"></picture></a><br>
-<a href="https://github.com/makspavlovskyi/Collab-project"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-1.svg"><img src="assets/generated/activity-light-1.svg" alt="Collab-project, pushed 2026-10-23" width="100%"></picture></a><br>
-<a href="https://github.com/makspavlovskyi/FRONTEND_MENTOR--Perfume-card-responsive-challenge-DONE"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-2.svg"><img src="assets/generated/activity-light-2.svg" alt="FRONTEND_MENTOR--Perfume-card-responsive-challenge-DONE, pushed 2026-10-23" width="100%"></picture></a><br>
-<a href="https://github.com/makspavlovskyi/front-end-project-js-api"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-3.svg"><img src="assets/generated/activity-light-3.svg" alt="front-end-project-js-api, pushed 2026-10-23" width="100%"></picture></a><br>
-<a href="https://github.com/makspavlovskyi/js-challenges"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-4.svg"><img src="assets/generated/activity-light-4.svg" alt="js-challenges, pushed 2026-10-23" width="100%"></picture></a>
+<a href="https://github.com/makspavlovskyi/10kWebSite"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-0.svg"><img src="assets/generated/activity-light-0.svg" alt="10kWebSite, last code change 2026-08-24" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/node-express-course-1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-1.svg"><img src="assets/generated/activity-light-1.svg" alt="node-express-course-1, last code change 2026-05-24" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/illustrates.dev-platform-v2"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-2.svg"><img src="assets/generated/activity-light-2.svg" alt="illustrates.dev-platform-v2, last code change 2026-05-13" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/java-app"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-3.svg"><img src="assets/generated/activity-light-3.svg" alt="java-app, last code change 2026-05-11" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/oaqjp-final-project-emb-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-4.svg"><img src="assets/generated/activity-light-4.svg" alt="oaqjp-final-project-emb-ai, last code change 2026-05-07" width="100%"></picture></a>
 <!-- activity:end -->
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0A0A0A&ring=E6C361&fire=E6C361&currStreakLabel=E6C361"><img src="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0A0A0A&ring=E6C361&fire=E6C361&currStreakLabel=E6C361" alt="GitHub streak for makspavlovskyi"></picture>
