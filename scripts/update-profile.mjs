@@ -297,6 +297,16 @@ function activitySvg(repos, mode) {
     + line + rows + `</svg>\n`;
 }
 
+// README images can't hold links, so the card is also cut into strips (header + one per repo),
+// each the same drawing cropped by viewBox; stacked in the README they read as one card.
+function activityStrips(svg, count) {
+  const H = Number(svg.match(/height="(\d+)"/)[1]);
+  const cuts = [0, ...Array.from({ length: count }, (_, i) => 40 + i * 58), H];
+  return cuts.slice(0, -1).map((y, i) => svg.replace(/^<svg [^>]*>/, (tag) => tag
+    .replace(/height="\d+"/, `height="${cuts[i + 1] - y}"`)
+    .replace(/viewBox="[^"]*"/, `viewBox="0 ${y} ${W} ${cuts[i + 1] - y}"`)));
+}
+
 // ---------- main ----------
 const repos = await collect();
 const langTotals = {};
@@ -308,13 +318,27 @@ for (const r of repos) {
 const langs = Object.entries(langTotals).sort((a, b) => b[1] - a[1]);
 const tools = Object.entries(toolRepos).map(([k, s]) => [k, s.size]).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
+const recent = [...repos].sort((a, b) => b.pushed_at.localeCompare(a.pushed_at)).slice(0, 5);
 await mkdir(OUT, { recursive: true });
 for (const mode of ["light", "dark"]) {
   const m = EFF(mode);
   await writeFile(new URL(`languages-${mode}.svg`, OUT), languagesSvg(langs, repos.length, m));
   await writeFile(new URL(`tools-${mode}.svg`, OUT), toolsSvg(tools, repos.length, m));
-  await writeFile(new URL(`activity-${mode}.svg`, OUT), activitySvg(repos, m));
+  const activity = activitySvg(repos, m);
+  await writeFile(new URL(`activity-${mode}.svg`, OUT), activity);
+  for (const [i, strip] of activityStrips(activity, recent.length).entries())
+    await writeFile(new URL(`activity-${mode}-${i}.svg`, OUT), strip);
 }
+
+const stripLinks = [`https://github.com/${USER}?tab=repositories&sort=updated`, ...recent.map((r) => r.html_url)];
+const stripAlts = ["Recently pushed: my 5 latest public repos", ...recent.map((r) => `${r.name}, pushed ${r.pushed_at.slice(0, 10)}`)];
+const strips = stripLinks.map((href, i) => `<a href="${href}"><picture>`
+  + `<source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-${i}.svg">`
+  + `<img src="assets/generated/activity-light-${i}.svg" alt="${esc(stripAlts[i])}" width="100%"></picture></a>`).join("<br>\n");
+const readmeUrl = new URL("README.md", ROOT);
+const readme = await readFile(readmeUrl, "utf8");
+const filled = readme.replace(/(<!-- activity:start[^>]*-->\n)[\s\S]*?(<!-- activity:end -->)/, `$1${strips}\n$2`);
+if (filled !== readme) await writeFile(readmeUrl, filled);
 await writeFile(new URL("stats.json", OUT), JSON.stringify({
   repos: repos.length,
   languages: Object.fromEntries(langs),

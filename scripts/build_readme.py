@@ -274,7 +274,9 @@ Measured daily from the code in my public repos: language share from GitHub's by
 
 ### Activity
 
+<!-- activity:start (filled by scripts/update-profile.mjs: one linked strip per repo) -->
 <a href="https://github.com/makspavlovskyi?tab=repositories&sort=updated">{pic("assets/generated/activity-light.svg", "assets/generated/activity-dark.svg", "My most recently pushed public repositories", ' width="100%"')}</a>
+<!-- activity:end -->
 
 {pic(STREAK + STREAK_LIGHT, STREAK + STREAK_DARK, "GitHub streak for makspavlovskyi")}
 
