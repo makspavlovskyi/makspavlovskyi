@@ -1,0 +1,66 @@
+name: Update profile
+
+on:
+  schedule:
+    - cron: "17 4 * * *" # daily, 04:17 UTC
+  push:
+    branches: [main]
+    paths-ignore: ["assets/generated/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-profile
+  cancel-in-progress: false
+
+jobs:
+  readme:
+    name: Activity and usage stats
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build README, banner and project cards
+        run: |
+          sudo apt-get install -y -q fonts-liberation >/dev/null
+          pip install -q pillow
+          python scripts/build_readme.py
+      - name: Measure repos and rewrite README
+        run: node scripts/update-profile.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: makspavlovskyi
+      - name: Commit if changed
+        run: |
+          git add -A README.md assets
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: refresh activity and usage stats"
+          git push
+
+  snake:
+    name: Contribution snake
+    # colours match the Black Gold palette in profile.config.json (black in both themes)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/github-snake.svg?palette=github-dark&color_snake=#e8c76b&color_dots=#1b1b1b,#4a3d18,#806824,#c09a33,#e5bf58&color_background=#0a0a0a
+            dist/github-snake-dark.svg?palette=github-dark&color_snake=#e8c76b&color_dots=#1b1b1b,#4a3d18,#806824,#c09a33,#e5bf58&color_background=#0a0a0a
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: "chore: update contribution snake"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

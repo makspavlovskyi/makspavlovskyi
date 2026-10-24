@@ -1,150 +1,43 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+  <img alt="$ whoami: Maks Pavlovskyi, full-stack, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
+</picture>
 
-<p align="center">
-  <img src="./GIF/js-for-all.gif" width="100%" alt="Header" style="border-radius: 20px;" />
+<p>
+<a href="https://buymeacoffee.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/bmc-dark.svg"><img src="assets/buttons/bmc-light.svg" alt="Buy me a coffee" align="right"></picture></a>
+<a href="https://www.patreon.com/maxpavlovs"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/patreon-dark.svg"><img src="assets/buttons/patreon-light.svg" alt="Patreon" align="right"></picture></a>
+I build web products end to end with TypeScript, React and Node.
 </p>
 
-<table border="0">
-  <tr>
-    <td width="40%" align="center" valign="middle">
-      <img src="./GIF/github-top.gif" width="300" alt="Support Decoration" style="border-radius: 20px;" />
-    </td>
-    <td width="60%" align="left" valign="top">
-      <h3 align="left">𝚂𝚄𝙿𝙿𝙾𝚁𝚃:</h3>
-      <p align="left">
-        <a href="https://www.buymeacoffee.com/maxpavlovs" target="_blank">
-          <img height="80" width="280" src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" style="border-radius: 30px;" alt="Buy Me A Coffee" />
-        </a>
-        <br>
-        <small><i>Includes perks like comments on my blog and early updates!</i></small>
-        <br><br>
-        <a href="https://www.patreon.com/maxpavlovs" target="_blank">
-          <img height="80" width="280" src="https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white" style="border-radius: 30px;" alt="Patreon" />
-        </a>
-        <br>
-        <small><i>Premium perks for dedicated supporters!</i></small>
-      </p>
-    </td>
-  </tr>
-</table>
-
-
-
-
-
-<h1 align="center">
-  <img src="GIF/Earth.gif" width="24px"/>
-  𝐇𝐞𝐥𝐥𝐨, &lt;𝚌𝚘𝚍𝚎𝚛𝚜/&gt;!
-  <img src="GIF/Hi.gif" width="40px" />
-</h1>
-
-<br/>
-<br/>
-
-
-- 🔭 𝙸’𝚖 𝚌𝚞𝚛𝚛𝚎𝚗𝚝𝚕𝚢 𝚠𝚘𝚛𝚔𝚒𝚗𝚐 𝚘𝚗 **portfolio_projects.**
-- 👯 𝙸’𝚖 𝚕𝚘𝚘𝚔𝚒𝚗𝚐 𝚝𝚘 𝚌𝚘𝚕𝚕𝚊𝚋𝚘𝚛𝚊𝚝𝚎 𝚘𝚗 **MERN, WEB-DEV.**
-- 💬 𝙰𝚜𝚔 𝙼𝚎 𝙰𝚋𝚘𝚞𝚝 𝙰𝚗𝚢𝚝𝚑𝚒𝚗𝚐 [here](https://github.com/makspavlovskyi/makspavlovskyi/issues) ! 𝙸 𝚊𝚖 𝚑𝚊𝚙𝚙𝚢 𝚝𝚘 𝚑𝚎𝚕𝚙.
-- ⚡ 𝙵𝚞𝚗 𝚏𝚊𝚌𝚝 : **𝚃𝚑𝚎 𝚓𝚘𝚞𝚛𝚗𝚎𝚢 𝚒𝚜𝚗'𝚝 𝚊𝚋𝚘𝚞𝚝 𝚝𝚑𝚎 𝚎𝚗𝚍, 𝚋𝚞𝚝 𝚝𝚑𝚎 𝚖𝚘𝚖𝚎𝚗𝚝𝚜 𝚝𝚑𝚊𝚝 𝚖𝚊𝚔𝚎 𝚒𝚝.**
-
-<br/>
-<br/>
-
-
-<p align="center">
-  <img alt = "profile views" src="https://komarev.com/ghpvc/?username=makspavlovskyi&style=flat&color=blue"/> •   
-  <img alt="𝙶𝚒𝚝𝙷𝚞𝚋 𝚏𝚘𝚕𝚕𝚘𝚠𝚎𝚛𝚜" src="https://img.shields.io/github/followers/makspavlovskyi?label=Followers&style=social"/> •
-  <img src="https://img.shields.io/github/stars/makspavlovskyi?label=Stars" alt="𝚃𝚘𝚝𝚊𝚕 𝚂𝚝𝚊𝚛𝚜"/> •
-  <a href="https://github.com/sponsors/makspavlovskyi"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86"/></a>
-</p>
-<!-- <p align="center">
-  <code>
-    <img src="https://img.shields.io/badge/dynamic/json?label=Gitwar%20Profile%20Score&style=for-the-badge&color=ee6f57&logo=github&logoColor=white&query=score&url=http%3A%2F%2Fgitwar-jayant.herokuapp.com%2Fapi%2FJayantGoel001" alt="𝙶𝚒𝚝𝚑𝚞𝚋 𝙿𝚛𝚘𝚏𝚒𝚕𝚎 𝚂𝚌𝚘𝚛𝚎">
-  </code>
-</p> -->
-
-#
-
-<br/>
-
-**𝙻𝙰𝙽𝙶𝚄𝙰𝙶𝙴𝚂 𝙰𝙽𝙳 𝚃𝙾𝙾𝙻𝚂:**  
-
-<br/>
-<br/>
-
-<p align="center">
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png"/></code>
-<code><img height="40" width="40" src="https://images.vexels.com/media/users/3/166401/isolated/preview/b82aa7ac3f736dd78570dd3fa3fa9e24-java-programming-language-icon-by-vexels.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png"/></code>
-<code><img height="40" width="40" src="https://www.naveedashfaq.me/img/c++.png"/></code>
-<code><img height="40" width="40" src="https://cdn.iconscout.com/icon/free/png-512/c-programming-569564.png"/></code>
+<p>
+<a href="https://client.illustrates.dev/main-dashboard"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/site-dark.svg"><img src="assets/buttons/site-light.svg" alt="illustrates.dev"></picture></a>
+<a href="https://client.illustrates.dev/blog"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/blog-dark.svg"><img src="assets/buttons/blog-light.svg" alt="Blog"></picture></a>
+<a href="https://linkedin.com/in/maksym-pavlovskyi-536647267"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/linkedin-dark.svg"><img src="assets/buttons/linkedin-light.svg" alt="LinkedIn"></picture></a>
+<a href="https://medium.com/@pavlovskymaxym4"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/medium-dark.svg"><img src="assets/buttons/medium-light.svg" alt="Medium"></picture></a>
+<a href="mailto:illustrates.service@gmail.com"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/email-dark.svg"><img src="assets/buttons/email-light.svg" alt="Email"></picture></a>
 </p>
 
-#
-<p align="center">
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/express/express.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/tailwind/tailwind.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/ubuntu/ubuntu.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/docker/docker.png"/></code>
-<code><img height="40" width="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/aws/aws.png"/></code>
+### Selected work
+
+<p>
+<a href="https://github.com/makspavlovskyi/illustrates.dev-platform-v2"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/cards/illustrates.dev-platform-v2-dark.svg"><img src="assets/cards/illustrates.dev-platform-v2-light.svg" alt="illustrates.dev-platform-v2: Full-stack portfolio platform: Express API and Next.js in one monorepo" width="32%"></picture></a>
+<a href="https://github.com/makspavlovskyi/git-helper"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/cards/git-helper-dark.svg"><img src="assets/cards/git-helper-light.svg" alt="git-helper: Interactive CLI for everyday git commands, with AI-suggested commit messages" width="32%"></picture></a>
+<a href="https://github.com/makspavlovskyi/js-challenges"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/cards/js-challenges-dark.svg"><img src="assets/cards/js-challenges-light.svg" alt="js-challenges: Virtual DOM renderer written from scratch, with its own tests" width="32%"></picture></a>
 </p>
 
-<br/>
+### What I actually use
 
-#
-<p align="center">
-<code><img height="40" width="40" src="https://skillicons.dev/icons?i=mongodb"/></code>
-<code><img height="40" width="40" src="https://skillicons.dev/icons?i=postman"/></code>
-<code><img height="40" width="40" src="https://skillicons.dev/icons?i=kafka"/></code>
-<code><img height="40" width="40" src="https://skillicons.dev/icons?i=redis"/></code>
-<code><img height="40" width="40" src="https://skillicons.dev/icons?i=cloudflare"/></code>
-<code><img height="40" width="40" src="https://skillicons.dev/icons?i=vercel"/></code>
-<code><img height="40" width="40" src="https://skillicons.dev/icons?i=githubactions"/></code>
-</p>
-<br/>
+Measured daily from the code in my public repos: language share from GitHub's byte counts, and frameworks found in each repo's dependencies and config files.
 
-#
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-dark.svg"><img src="assets/generated/languages-light.svg" alt="Languages by share of code across my public repos" width="100%"></picture>
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/tools-dark.svg"><img src="assets/generated/tools-light.svg" alt="Frameworks and tools found in my public repos, with repo counts" width="100%"></picture>
 
+### Activity
 
-<!-- <details open="">
-<summary>
-  <g-emoji class="g-emoji" alias="chart_with_upwards_trend" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f4c8.png">📈</g-emoji>
-  <strong>𝙶𝚒𝚝𝚑𝚞𝚋 𝚂𝚝𝚊𝚝𝚜 : </strong>
-</summary>
-<br/>
+<a href="https://github.com/makspavlovskyi?tab=repositories&sort=updated"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark.svg"><img src="assets/generated/activity-light.svg" alt="My most recently pushed public repositories" width="100%"></picture></a>
 
-<p align="center">
-    <img align="center" src="https://github-readme-stats.vercel.app/api?username=makspavlovskyi&show_icons=true&hide_border=true&title_color=94b4a4&amp&icon_color=FFFFFF&amp&text_color=FFFFFF&amp&bg_color=000000&count_private=true&include_all_commits=true"/>
-    <img align="center" height="195px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=makspavlovskyi&text_color=FFFFFF&bg_color=000000&title_color=94b4a4&langs_count=15&layout=compact&hide_border=true" />
-</p>
-</details> -->
-<br/>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0A0A0A&ring=E6C361&fire=E6C361&currStreakLabel=E6C361"><img src="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0A0A0A&ring=E6C361&fire=E6C361&currStreakLabel=E6C361" alt="GitHub streak for makspavlovskyi"></picture>
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/github-snake-dark.svg"><img src="https://raw.githubusercontent.com/makspavlovskyi/makspavlovskyi/output/github-snake.svg" alt="Snake eating my GitHub contribution graph" width="100%"></picture>
 
-
-
-![𝙶𝚒𝚝𝚑𝚞𝚋 𝙲𝚘𝚗𝚝𝚛𝚒𝚋𝚞𝚝𝚒𝚘𝚗 𝙶𝚛𝚊𝚙𝚑](github-contribution-grid-snake.svg)
-
-<br/>
-
-
-
-
-
-<br/>
-
-<br/>
-
-<div align="center">
-
-### 𝚂𝚑𝚘𝚠 𝚜𝚘𝚖𝚎 ❤️ 𝚋𝚢 𝚜𝚝𝚊𝚛𝚛𝚒𝚗𝚐 𝚜𝚘𝚖𝚎 𝚘𝚏 𝚝𝚑𝚎 𝚛𝚎𝚙𝚘𝚜𝚒𝚝𝚘𝚛𝚒𝚎𝚜!
-
-</div>
-
-#
-
-![footer](WEBP/footer.webp)
