@@ -231,7 +231,7 @@ def btn(key, label, url, extra=""):
     return f'<a href="{url}">{pic(f"assets/buttons/{key}-light.svg", f"assets/buttons/{key}-dark.svg", label, extra)}</a>'
 
 links = "\n".join(btn(k, l, u) for k, l, _, u in LINKS)
-support = "\n".join(btn(k, l, u, ' align="right"') for k, l, _, u, _s in reversed(SUPPORT))
+support = "\n".join(btn(k, l, u) for k, l, _, u, _s in SUPPORT)
 cards = "\n".join(
     f'<a href="https://github.com/makspavlovskyi/{p[0]}">'
     + pic(f"assets/cards/{p[0]}-light.svg", f"assets/cards/{p[0]}-dark.svg", f"{p[0]}: {p[1]}", ' width="32%"') + "</a>"
@@ -249,13 +249,11 @@ readme = f"""<picture>
   <img alt="$ whoami: Maks Pavlovskyi, full-stack, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
 </picture>
 
-<p>
-{support}
 I build web products end to end with TypeScript, React and Node.
-</p>
 
 <p>
 {links}
+{support}
 </p>
 
 ### Selected work
