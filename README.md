@@ -1,6 +1,6 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
-  <img alt="$ whoami: Maks Pavlovskyi, software engineer, SaaS, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
+  <img alt="$ whoami: Maks Pavlovskyi, software engineer, SaaS. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
 </picture>
 
 <p>
