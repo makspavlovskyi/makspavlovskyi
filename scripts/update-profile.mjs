@@ -6,6 +6,7 @@
 //      pyproject.toml and config files, counted per repo
 // No dependencies. Set FIXTURE=path.json to render from saved data instead of the API.
 import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { createHash } from "node:crypto";
 
 const USER = process.env.GH_USER ?? "makspavlovskyi";
 const ROOT = new URL("../", import.meta.url);
@@ -376,7 +377,15 @@ const activityMd = recent.length
   : "No public activity yet.";
 const readmeUrl = new URL("README.md", ROOT);
 const readme = await readFile(readmeUrl, "utf8");
-const filled = readme.replace(/(<!-- activity:start[^>]*-->\n)[\s\S]*?(<!-- activity:end -->)/, `$1${activityMd}\n$2`);
+let filled = readme.replace(/(<!-- activity:start[^>]*-->\n)[\s\S]*?(<!-- activity:end -->)/, `$1${activityMd}\n$2`);
+// GitHub caches repo images for 5 minutes; tagging each local SVG with a hash of its content
+// makes a changed image a new URL, so edits show up on the profile right away.
+const tagged = [];
+for (const m of filled.matchAll(/(assets\/[^"?\s]+\.svg)(\?v=[0-9a-f]+)?/g)) tagged.push(m[1]);
+for (const path of new Set(tagged)) {
+  const hash = createHash("sha1").update(await readFile(new URL(path, ROOT))).digest("hex").slice(0, 8);
+  filled = filled.replaceAll(new RegExp(`${path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(\\?v=[0-9a-f]+)?(?=")`, "g"), `${path}?v=${hash}`);
+}
 if (filled !== readme) await writeFile(readmeUrl, filled);
 await writeFile(new URL("stats.json", OUT), JSON.stringify({
   repos: repos.length,
