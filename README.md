@@ -3,8 +3,6 @@
   <img alt="$ whoami: Maks Pavlovskyi, full-stack, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
 </picture>
 
-I build web products end to end with TypeScript, React and Node.
-
 <p>
 <a href="https://client.illustrates.dev/main-dashboard"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/site-dark.svg"><img src="assets/buttons/site-light.svg" alt="illustrates.dev"></picture></a>
 <a href="https://client.illustrates.dev/blog"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/buttons/blog-dark.svg"><img src="assets/buttons/blog-light.svg" alt="Blog"></picture></a>

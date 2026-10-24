@@ -249,8 +249,6 @@ readme = f"""<picture>
   <img alt="$ whoami: Maks Pavlovskyi, full-stack, TypeScript, React, Node. Now building illustrates.dev" src="assets/banner-light.svg" width="100%">
 </picture>
 
-I build web products end to end with TypeScript, React and Node.
-
 <p>
 {links}
 {support}
