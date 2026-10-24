@@ -47,6 +47,9 @@
       "node-express-course-1",
       "starter-setup"
     ],
+    "Prometheus": [
+      "illustrates.dev-platform-v2"
+    ],
     "React": [
       "11-projects-portfolio",
       "computer-science-project2.0",
@@ -60,6 +63,15 @@
     "Jest": [
       "11-projects-portfolio",
       "computer-science-project2.0",
+      "illustrates.dev-platform-v2"
+    ],
+    "MinIO": [
+      "illustrates.dev-platform-v2"
+    ],
+    "Grafana": [
+      "illustrates.dev-platform-v2"
+    ],
+    "Nginx": [
       "illustrates.dev-platform-v2"
     ],
     "Next.js": [
@@ -90,9 +102,6 @@
       "computer-science-project2.0",
       "illustrates.dev-platform-v2",
       "node-express-course-1"
-    ],
-    "Nginx": [
-      "illustrates.dev-platform-v2"
     ],
     "Vercel": [
       "node-express-course-1"

@@ -28,7 +28,7 @@ Measured daily from the code in my public repos: language share from GitHub's by
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-dark.svg?v=b60daea3"><img src="assets/generated/languages-light.svg?v=b60daea3" alt="Languages by share of code across my public repos" width="100%"></picture>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/tools-dark.svg?v=985071f7"><img src="assets/generated/tools-light.svg?v=985071f7" alt="Frameworks and tools found in my public repos, with repo counts" width="100%"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/tools-dark.svg?v=8af6fe28"><img src="assets/generated/tools-light.svg?v=8af6fe28" alt="Frameworks and tools found in my public repos, with repo counts" width="100%"></picture>
 
 ### Activity
 
