@@ -297,14 +297,30 @@ function activitySvg(repos, mode) {
     + line + rows + `</svg>\n`;
 }
 
-// README images can't hold links, so the card is also cut into strips (header + one per repo),
-// each the same drawing cropped by viewBox; stacked in the README they read as one card.
-function activityStrips(svg, count) {
-  const H = Number(svg.match(/height="(\d+)"/)[1]);
-  const cuts = [0, ...Array.from({ length: count }, (_, i) => 40 + i * 58), H];
-  return cuts.slice(0, -1).map((y, i) => svg.replace(/^<svg [^>]*>/, (tag) => tag
-    .replace(/height="\d+"/, `height="${cuts[i + 1] - y}"`)
-    .replace(/viewBox="[^"]*"/, `viewBox="0 ${y} ${W} ${cuts[i + 1] - y}"`)));
+// README images can't hold links, so the README shows one small card per repo, each wrapped in
+// its own link. GitHub leaves ~6px between stacked images; the timeline runs through each card
+// so the gaps read as spacing, not cuts.
+function activityRowSvg(r, i, count, mode) {
+  const t = THEME[mode];
+  const H = 66, lineX = 128, dotY = 26;
+  const d = new Date(r.pushed_at);
+  const lang = Object.entries(r.languages ?? {}).sort((a, b) => b[1] - a[1])[0]?.[0];
+  const color = LANG_COLOR[lang] ?? "#8b949e";
+  const langW = lang ? textW(lang, 12) + 22 : 0;
+  const textMax = W - 24 - langW - (lineX + 24) - 16;
+  const desc = r.description?.trim() ? fit(r.description.trim(), 13, textMax) : "";
+  const line = (i > 0 ? `<path d="M${lineX} 0 V${dotY}" stroke="${t.border}" stroke-width="2"/>` : "")
+    + (i < count - 1 ? `<path d="M${lineX} ${dotY} V${H}" stroke="${t.border}" stroke-width="2"/>` : "");
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(r.name)}, pushed ${r.pushed_at.slice(0, 10)}">`
+    + `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="10" fill="${BASE[mode]}" stroke="${t.border}"/>`
+    + line
+    + `<text x="${lineX - 22}" y="${dotY + 5}" text-anchor="end" fill="${t.fg}" font-family="${SANS}" font-size="13" font-weight="500" style="font-variant-numeric:tabular-nums">${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}</text>`
+    + `<text x="${lineX - 22}" y="${dotY + 23}" text-anchor="end" fill="${t.muted}" font-family="${SANS}" font-size="12" style="font-variant-numeric:tabular-nums">${d.getUTCFullYear()}</text>`
+    + `<circle cx="${lineX}" cy="${dotY}" r="6" fill="${i === 0 ? t.bar : BASE[mode]}" stroke="${i === 0 ? t.bar : t.border}" stroke-width="2"/>`
+    + `<text x="${lineX + 24}" y="${dotY + 5}" fill="${t.link}" font-family="${SANS}" font-size="14" font-weight="600">${esc(fit(r.name, 14, textMax))} <tspan fill="${t.muted}" font-weight="400">↗</tspan></text>`
+    + (desc ? `<text x="${lineX + 24}" y="${dotY + 24}" fill="${t.muted}" font-family="${SANS}" font-size="13">${esc(desc)}</text>` : "")
+    + (lang ? `<circle cx="${W - 24 - langW + 5}" cy="${dotY + 1}" r="5" fill="${color}"/><text x="${W - 24}" y="${dotY + 5}" text-anchor="end" fill="${t.muted}" font-family="${SANS}" font-size="12">${esc(lang)}</text>` : "")
+    + `</svg>\n`;
 }
 
 // ---------- main ----------
@@ -324,20 +340,20 @@ for (const mode of ["light", "dark"]) {
   const m = EFF(mode);
   await writeFile(new URL(`languages-${mode}.svg`, OUT), languagesSvg(langs, repos.length, m));
   await writeFile(new URL(`tools-${mode}.svg`, OUT), toolsSvg(tools, repos.length, m));
-  const activity = activitySvg(repos, m);
-  await writeFile(new URL(`activity-${mode}.svg`, OUT), activity);
-  for (const [i, strip] of activityStrips(activity, recent.length).entries())
-    await writeFile(new URL(`activity-${mode}-${i}.svg`, OUT), strip);
+  await writeFile(new URL(`activity-${mode}.svg`, OUT), activitySvg(repos, m));
+  for (const [i, r] of recent.entries())
+    await writeFile(new URL(`activity-${mode}-${i}.svg`, OUT), activityRowSvg(r, i, recent.length, m));
 }
 
-const stripLinks = [`https://github.com/${USER}?tab=repositories&sort=updated`, ...recent.map((r) => r.html_url)];
-const stripAlts = ["Recently pushed: my 5 latest public repos", ...recent.map((r) => `${r.name}, pushed ${r.pushed_at.slice(0, 10)}`)];
-const strips = stripLinks.map((href, i) => `<a href="${href}"><picture>`
+const rows = recent.map((r, i) => `<a href="${r.html_url}"><picture>`
   + `<source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-${i}.svg">`
-  + `<img src="assets/generated/activity-light-${i}.svg" alt="${esc(stripAlts[i])}" width="100%"></picture></a>`).join("<br>\n");
+  + `<img src="assets/generated/activity-light-${i}.svg" alt="${esc(r.name)}, pushed ${r.pushed_at.slice(0, 10)}" width="100%"></picture></a>`).join("<br>\n");
+const activityMd = recent.length
+  ? `Recently pushed · my ${recent.length} latest public repos, click one to open it\n\n${rows}`
+  : "No public activity yet.";
 const readmeUrl = new URL("README.md", ROOT);
 const readme = await readFile(readmeUrl, "utf8");
-const filled = readme.replace(/(<!-- activity:start[^>]*-->\n)[\s\S]*?(<!-- activity:end -->)/, `$1${strips}\n$2`);
+const filled = readme.replace(/(<!-- activity:start[^>]*-->\n)[\s\S]*?(<!-- activity:end -->)/, `$1${activityMd}\n$2`);
 if (filled !== readme) await writeFile(readmeUrl, filled);
 await writeFile(new URL("stats.json", OUT), JSON.stringify({
   repos: repos.length,
