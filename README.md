@@ -26,20 +26,20 @@
 
 Measured daily from the code in my public repos: language share from GitHub's byte counts, and frameworks found in each repo's dependencies and config files.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-dark.svg?v=b60daea3"><img src="assets/generated/languages-light.svg?v=b60daea3" alt="Languages by share of code across my public repos" width="100%"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/languages-dark.svg?v=80771a9d"><img src="assets/generated/languages-light.svg?v=80771a9d" alt="Languages by share of code across my public repos" width="100%"></picture>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/tools-dark.svg?v=8af6fe28"><img src="assets/generated/tools-light.svg?v=8af6fe28" alt="Frameworks and tools found in my public repos, with repo counts" width="100%"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/tools-dark.svg?v=e8056fdc"><img src="assets/generated/tools-light.svg?v=e8056fdc" alt="Frameworks and tools found in my public repos, with repo counts" width="100%"></picture>
 
 ### Activity
 
 <!-- activity:start (filled by scripts/update-profile.mjs: one linked card per repo) -->
 Recently worked on · last code change in my public repos, click one to open it
 
-<a href="https://github.com/makspavlovskyi/10kWebSite"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-0.svg?v=caa4fceb"><img src="assets/generated/activity-light-0.svg?v=caa4fceb" alt="10kWebSite, last code change 2026-08-24" width="100%"></picture></a><br>
-<a href="https://github.com/makspavlovskyi/node-express-course-1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-1.svg?v=5debe6fc"><img src="assets/generated/activity-light-1.svg?v=5debe6fc" alt="node-express-course-1, last code change 2026-05-24" width="100%"></picture></a><br>
-<a href="https://github.com/makspavlovskyi/illustrates.dev-platform-v2"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-2.svg?v=9e3d82c2"><img src="assets/generated/activity-light-2.svg?v=9e3d82c2" alt="illustrates.dev-platform-v2, last code change 2026-05-13" width="100%"></picture></a><br>
-<a href="https://github.com/makspavlovskyi/java-app"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-3.svg?v=5a1e7d4f"><img src="assets/generated/activity-light-3.svg?v=5a1e7d4f" alt="java-app, last code change 2026-05-11" width="100%"></picture></a><br>
-<a href="https://github.com/makspavlovskyi/oaqjp-final-project-emb-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-4.svg?v=1a7f1832"><img src="assets/generated/activity-light-4.svg?v=1a7f1832" alt="oaqjp-final-project-emb-ai, last code change 2026-05-07" width="100%"></picture></a>
+<a href="https://github.com/makspavlovskyi/about"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-0.svg?v=d0994596"><img src="assets/generated/activity-light-0.svg?v=d0994596" alt="about, last code change 2026-10-24" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/freelance"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-1.svg?v=a306c56b"><img src="assets/generated/activity-light-1.svg?v=a306c56b" alt="freelance, last code change 2026-10-24" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/10kWebSite"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-2.svg?v=5a309b36"><img src="assets/generated/activity-light-2.svg?v=5a309b36" alt="10kWebSite, last code change 2026-08-24" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/node-express-course-1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-3.svg?v=5debe6fc"><img src="assets/generated/activity-light-3.svg?v=5debe6fc" alt="node-express-course-1, last code change 2026-05-24" width="100%"></picture></a><br>
+<a href="https://github.com/makspavlovskyi/illustrates.dev-platform-v2"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/activity-dark-4.svg?v=3622eb05"><img src="assets/generated/activity-light-4.svg?v=3622eb05" alt="illustrates.dev-platform-v2, last code change 2026-05-13" width="100%"></picture></a>
 <!-- activity:end -->
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0A0A0A&ring=E6C361&fire=E6C361&currStreakLabel=E6C361"><img src="https://streak-stats.demolab.com/?user=makspavlovskyi&hide_border=true&theme=dark&background=0A0A0A&ring=E6C361&fire=E6C361&currStreakLabel=E6C361" alt="GitHub streak for makspavlovskyi"></picture>
